@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Users, Gifts and Orders API Documentation</title>
+<style>
+body {
+  font-family: sans-serif;
+}
+table {
+  width: auto; /* Tables take up only the space they need */
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 14px; /* Smaller font size */
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 5px; /* Smaller padding */
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.endpoint {
+  font-family: monospace;
+  font-size: 12px; /* Smaller font size for endpoints */
+}
+.hebrew {
+  direction: rtl;
+}
+</style>
+</head>
+<body>
+
+<h1>Users API Documentation</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Parameters</th>
+      <th>Request Body</th>
+      <th>Description</th>
+      <th>Possible Errors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td class="endpoint">/user</td>
+      <td>-</td>
+      <td>-</td>
+      <td class="hebrew">מחזירה את כל המשתמשים</td>
+      <td>Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td class="endpoint">/user/get</td>
+      <td>id</td>
+      <td>-</td>
+      <td class="hebrew">מחזיר משתמש לפי קוד</td>
+      <td>Invalid ID, Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td class="endpoint">/user</td>
+      <td>-</td>
+      <td>userName, mail, password, phone</td>
+      <td class="hebrew">מוסיף משתמש חדש</td>
+      <td>Missing required fields, Invalid email, Password not strong enough, Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td class="endpoint">/user/update</td>
+      <td>id</td>
+      <td>!!password</td>
+      <td class="hebrew">מעדכן משתמש קיים</td>
+      <td>Invalid ID, Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td class="endpoint">/user/update_password</td>
+      <td>id</td>
+      <td>password</td>
+      <td class="hebrew">מעדכן סיסמה בלבד</td>
+      <td>Invalid ID, Password not strong enough, Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td class="endpoint">/user/login</td>
+      <td>-</td>
+      <td>userName, password</td>
+      <td class="hebrew">מתחבר לחשבון משתמש</td>
+      <td>Invalid username/password, Failed to connect to server</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1>Gifts API Documentation</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Parameters</th>
+      <th>Request Body</th>
+      <th>Description</th>
+      <th>Possible Errors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td class="endpoint">/gifts</td>
+      <td>-</td>
+      <td>-</td>
+      <td class="hebrew">מחזירה את כל המתנות</td>
+      <td>Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td class="endpoint">/gifts/get</td>
+      <td>id</td>
+      <td>-</td>
+      <td class="hebrew">מחזיר מתנה לפי קוד</td>
+      <td>Invalid ID, Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td class="endpoint">/gifts/get_out_of_stock</td>
+      <td>-</td>
+      <td>-</td>
+      <td class="hebrew">מחזיר את כל המתנות שלא קיימות במלאי</td>
+      <td>Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td class="endpoint">/gifts</td>
+      <td>-</td>
+      <td>name, products, price, quantity_in_stock, products</td>
+      <td class="hebrew">יוצר מתנה חדשה</td>
+      <td>Missing required fields, Price less than 1, Stock less than 0, Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td class="endpoint">/gifts</td>
+      <td>id</td>
+      <td></td>
+      <td class="hebrew">מעדכן מתנה קיימת</td>
+      <td>Invalid ID, Price less than 1, Stock less than 0, Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td class="endpoint">/gifts</td>
+      <td>id</td>
+      <td>-</td>
+      <td class="hebrew">מוחק מתנה</td>
+      <td>Invalid ID, Failed to connect to server</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1>Orders API Documentation</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Parameters</th>
+      <th>Request Body</th>
+      <th>Description</th>
+      <th>Possible Errors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td class="endpoint">/order</td>
+      <td>-</td>
+      <td>-</td>
+      <td class="hebrew">מחזיר את כל ההזמנות</td>
+      <td>Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td class="endpoint">/order/get</td>
+      <td>id</td>
+      <td>-</td>
+      <td class="hebrew">מחזיר הזמנה לפי קוד</td>
+      <td>Invalid ID, Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td class="endpoint">/order/get_target_date</td>
+      <td>date</td>
+      <td>-</td>
+      <td class="hebrew">מחזיר את כל ההזמנות שהתקבלו בתאריך</td>
+      <td>Failed to connect to server, The date received is not in date format</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td class="endpoint">/order/get.all.unaccepted</td>
+      <td>id</td>
+      <td>-</td>
+      <td class="hebrew">מחזיר את כל ההזמנות של משתמש מסוים</td>
+      <td>Invalid ID, Failed to connect to server</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td class="endpoint">/order</td>
+      <td></td>
+      <td>id_user, products.name, products.id_gift_in_GIFTS, quantity</td>
+      <td class="hebrew">יוצר הזמנה חדשה</td>
+      <td>One of the required fields was not sent, the user does not exist, the product does not exist, there is not enough in stock, the receipt date is less than today, the shipping price is incorrect, unable to connect to the server</td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td class="endpoint">/order/update</td>
+      <td>id</td>
+      <td></td>
+      <td class="hebrew">מעדכן הזמנה קיימת</td>
+      <td>Invalid ID, Failed to connect to server, If parameters that cannot be updated were sent</td>
+    </tr>
+    <tr>
+        <td>PUT</td>
+        <td class="endpoint">/order/update_sending</td>
+        <td>id</td>
+        <td>-</td>
+        <td class="hebrew">מעדכן הזמנה קיימת</td>
+        <td>Invalid ID, Failed to connect to server</td>
+      </tr>
+    <tr>
+      <td>DELETE</td>
+      <td class="endpoint">/order</td>
+      <td>id</td>
+      <td>-</td>
+      <td class="hebrew">מוחק הזמנה</td>
+      <td>Invalid ID, Failed to connect to server, More than five business days have passed, The invitation has already been sent.</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
