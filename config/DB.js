@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 //data base פונקציה בשביל התחברות ל 
 export default function connectToDB() {
-  mongoose.connect("mongodb+srv://dasi254844:0583254844@cluster0.glvtz.mongodb.net")
+  mongoose.connect(process.env.MONGO_URI)
     .then(data => console.log("Connected to MongoDB"))
     .catch(err => {
       console.error("Connection error" + err.message);
