@@ -14,7 +14,7 @@ const minimalGIFTSchema = Schema({
 const orderSchema = Schema({
     date_order: { type: Date, default: Date.now },
     id_user: { type: Schema.Types.ObjectId, ref: USERS, required: true },
-    products: { type: minimalGIFTSchema, required: true },
+    products: { type: [minimalGIFTSchema], required: true },
     is_sending: { type: Boolean, default: false },
     target_date: {
         type: Date, default: () => {
@@ -23,7 +23,7 @@ const orderSchema = Schema({
             return today;
         }
     },
-    address_target: { city:{type: String, required: true}, street: {type: String, required: true}, street_number: {type: Number, required: true}, apartment_number: {type: Number}},
+    address_target: { city: { type: String, required: true }, street: { type: String, required: true }, street_number: { type: Number, required: true }, apartment_number: { type: Number } },
     is_received: { type: Boolean, default: false },
     price_sending: { type: Number, default: 0 },
     Greeting: { text: String, background_page: { type: String, enum: [1, 2, 3, 4, 5] } },
