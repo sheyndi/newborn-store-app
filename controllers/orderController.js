@@ -68,34 +68,34 @@ export const addOrder = async (req, res) => {
     //required האם נשלחו כל המאפיינים שהם 
     if (!body.id_user || !body.products)
         return res.status(400).json({ title: "missing parameters", message: "Not all required parameters were received" })
-    
+
     try {
         //שליפת המשתמש לצורך בדיקות תקינות
         let user = await USERS.findById(body.id_user)
         //האם המשתמש קיים
         if (!user)
             return res.status(400).json({ title: "cannot add order", message: "id_user is not exist" })
-
-    //שליפת המוצר לצורך בדיקות תקינות
-    let gift = await GIFTS.findById(body.products.id_gift_in_GIFTS)
-        //האם המוצר קיים
-        if (!gift)
-            return res.status(400).json({ title: "cannot add order", message: "product is not exist" })
-    //האם כמות המלאי מספיקה לכמות המבוקשת בהזמנה
-    if (gift.quantity_in_stock - body.quantity < 0)
-        return res.status(400).json({ title: "This product cannot be ordered", message: "The product is out of stock" })
-    //האם תאריך קבלת ההזמנה קטן מהיום הנוכחי
-    if (body.target_date && new Date(body.target_date) < Date.now())
-        return res.status(400).json({ title: "Invalid date", message: "The received date has passed" })
-    //האם מחיר המשלוח תקין
-    if (body.price_sending && body.price_sending < 0)
-        return res.status(400).json({ title: "Invalid price", message: "The price must be greater than 0" })
-
-    //מחיקת מאפיין מחיר
-    body.products.price = gift.price;
-    //הוספת המוצר
-    let newOrder = new ORDERS(body)
-    let data = await newOrder.save();
+        for(const prod of body.products) {
+            //שליפת המוצר לצורך בדיקות תקינות
+            let gift = await GIFTS.findById(prod.id_gift_in_GIFTS)
+            //האם המוצר קיים
+            if (!gift)
+                return res.status(400).json({ title: "cannot add order", message: "product is not exist" })
+            //האם כמות המלאי מספיקה לכמות המבוקשת בהזמנה
+            if (gift.quantity_in_stock - prod.quantity < 0)
+                return res.status(400).json({ title: "This product cannot be ordered", message: "The product is out of stock" })
+            //מחיקת מאפיין מחיר
+            prod.price = gift.price;
+        };
+         //האם תאריך קבלת ההזמנה קטן מהיום הנוכחי
+            if (body.target_date && new Date(body.target_date) < Date.now())
+                return res.status(400).json({ title: "Invalid date", message: "The received date has passed" })
+            //האם מחיר המשלוח תקין
+            if (body.price_sending && body.price_sending < 0)
+                return res.status(400).json({ title: "Invalid price", message: "The price must be greater than 0" })
+        //הוספת המוצר
+        let newOrder = new ORDERS(body)
+        let data = await newOrder.save();
         //עדכון מלאי המוצר שהוזמן להיות פחות הכמות שהוזמנה
         let giftUpdate = await GIFTS.findByIdAndUpdate(body.products.id_gift_in_GIFTS, { quantity_in_stock: gift.quantity_in_stock - body.quantity }, { new: true })
         res.json(data);
