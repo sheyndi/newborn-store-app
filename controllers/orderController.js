@@ -66,7 +66,7 @@ export const addOrder = async (req, res) => {
     let body = req.body;
     //בדיקות תקינות:
     //required האם נשלחו כל המאפיינים שהם 
-    if (!body.id_user || !body.products || !body.products.name || !body.products.id_gift_in_GIFTS || !body.quantity)
+    if (!body.id_user || !body.products)
         return res.status(400).json({ title: "missing parameters", message: "Not all required parameters were received" })
     
     try {
