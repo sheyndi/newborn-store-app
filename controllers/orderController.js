@@ -86,6 +86,7 @@ export const addOrder = async (req, res) => {
                 return res.status(400).json({ title: "This product cannot be ordered", message: "The product is out of stock" })
             //מחיקת מאפיין מחיר
             prod.price = gift.price;
+                    let giftUpdate = await GIFTS.findByIdAndUpdate(prod.id_gift_in_GIFTS, { quantity_in_stock: gift.quantity_in_stock - prod.quantity }, { new: true })
         };
          //האם תאריך קבלת ההזמנה קטן מהיום הנוכחי
             if (body.target_date && new Date(body.target_date) < Date.now())
@@ -97,7 +98,6 @@ export const addOrder = async (req, res) => {
         let newOrder = new ORDERS(body)
         let data = await newOrder.save();
         //עדכון מלאי המוצר שהוזמן להיות פחות הכמות שהוזמנה
-        let giftUpdate = await GIFTS.findByIdAndUpdate(body.products.id_gift_in_GIFTS, { quantity_in_stock: gift.quantity_in_stock - body.quantity }, { new: true })
         res.json(data);
     }
     catch (err) {
