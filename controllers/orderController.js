@@ -7,8 +7,9 @@ import orderModel from "../models/orderModel.js";
 export const getAllOrders = async (req, res) => {
     let limit = req.query.limit || 20;
     let page = req.query.page || 1;
-    let data = await ORDERS.find().skip((page - 1) * limit).limit(limit);
+
     try {
+        let data = await ORDERS.find().skip((page - 1) * limit).limit(limit).lean();
         if (!data)
             return res.status(404).json({ title: "cannot get all", message: "There are no products yet" })
         res.json(data);
@@ -21,8 +22,9 @@ export const getAllOrders = async (req, res) => {
 //id קבלת הזמנה לפי 
 export const getOrderById = async (req, res) => {
     let { id } = req.params;
-    let data = await ORDERS.findById(id);
+
     try {
+        let data = await ORDERS.findById(id);
         if (!data)
             return res.status(404).json({ title: "cannot get by id", message: "id is not exist" })
         res.json(data);
@@ -35,25 +37,23 @@ export const getOrderById = async (req, res) => {
 //id מחיקת הזמנה לפי 
 export const deleteOrder = async (req, res) => {
     let { id } = req.params;
-    //שליפת ההזמנה לצורך בדיקות תקינות
-    let order = await ORDERS.findById(id)
+
     try {
+        //שליפת ההזמנה לצורך בדיקות תקינות
+        let order = await ORDERS.findById(id)
         //בדיקה האם ההזמנה קיימת
         if (!order)
             return res.status(400).json({ title: "not found this order", message: "id is not exist in GIFTS" })
-    }
-    catch (err) {
-        return res.status(400).json({ title: "error in fuond this order", message: err.message })
-    }
-    //האם ההזמנה כבר יצאה לדרך
-    if (order.is_sending == true)
-        return res.status(400).json({ title: "cannot delete order", message: "The order has already started" })
-    //האם עברו יותר מ 5 ימי עסקים מיום ההזמנה
-    if ((new Date() - order.date_order) / (1000 * 60 * 60 * 24) > 5)
-        return res.status(400).json({ title: "cannot delete order", message: "5 business days have already passed" })
+        //האם ההזמנה כבר יצאה לדרך
+        if (order.is_sending == true)
+            return res.status(400).json({ title: "cannot delete order", message: "The order has already started" })
+        //האם עברו יותר מ 5 ימי עסקים מיום ההזמנה
+        if ((new Date() - order.date_order) / (1000 * 60 * 60 * 24) > 5)
+            return res.status(400).json({ title: "cannot delete order", message: "5 business days have already passed" })
 
-    let data = await ORDERS.findByIdAndDelete(id);
-    try {
+        let data = await ORDERS.findByIdAndDelete(id);
+        if (!data)
+            return res.status(400).json({ title: "cannot delete by id", message: "id is not exist" })
         res.json(data);
     }
     catch (err) {
@@ -66,28 +66,21 @@ export const addOrder = async (req, res) => {
     let body = req.body;
     //בדיקות תקינות:
     //required האם נשלחו כל המאפיינים שהם 
-    if (!body.id_user ||!body.products|| !body.products.name || !body.products.id_gift_in_GIFTS || !body.quantity)
+    if (!body.id_user || !body.products || !body.products.name || !body.products.id_gift_in_GIFTS || !body.quantity)
         return res.status(400).json({ title: "missing parameters", message: "Not all required parameters were received" })
-    //שליפת המשתמש לצורך בדיקות תקינות
-    let user = await USERS.findById(body.id_user)
+    
     try {
+        //שליפת המשתמש לצורך בדיקות תקינות
+        let user = await USERS.findById(body.id_user)
         //האם המשתמש קיים
         if (!user)
             return res.status(400).json({ title: "cannot add order", message: "id_user is not exist" })
-    }
-    catch (err) {
-        return res.status(400).json({ title: "error in fuond the user", message: err.message })
-    }
+
     //שליפת המוצר לצורך בדיקות תקינות
     let gift = await GIFTS.findById(body.products.id_gift_in_GIFTS)
-    try {
         //האם המוצר קיים
         if (!gift)
             return res.status(400).json({ title: "cannot add order", message: "product is not exist" })
-    }
-    catch (err) {
-        return res.status(400).json({ title: "error in fuond the gift", message: err.message })
-    }
     //האם כמות המלאי מספיקה לכמות המבוקשת בהזמנה
     if (gift.quantity_in_stock - body.quantity < 0)
         return res.status(400).json({ title: "This product cannot be ordered", message: "The product is out of stock" })
@@ -97,20 +90,14 @@ export const addOrder = async (req, res) => {
     //האם מחיר המשלוח תקין
     if (body.price_sending && body.price_sending < 0)
         return res.status(400).json({ title: "Invalid price", message: "The price must be greater than 0" })
+
     //מחיקת מאפיין מחיר
     body.products.price = gift.price;
     //הוספת המוצר
     let newOrder = new ORDERS(body)
     let data = await newOrder.save();
-    try {
         //עדכון מלאי המוצר שהוזמן להיות פחות הכמות שהוזמנה
-    let giftUpdate = await GIFTS.findByIdAndUpdate(body.products.id_gift_in_GIFTS, { quantity_in_stock: gift.quantity_in_stock - body.quantity},{new:true} )
-    try{
-        console.log(giftUpdate)
-    }
-    catch(err){
-        return res.status(400).json({ title: "error in update the quantity", message:err.message })
-    }
+        let giftUpdate = await GIFTS.findByIdAndUpdate(body.products.id_gift_in_GIFTS, { quantity_in_stock: gift.quantity_in_stock - body.quantity }, { new: true })
         res.json(data);
     }
     catch (err) {
@@ -185,9 +172,9 @@ export const getAllOrdersInDate = async (req, res) => {
 }
 
 //קבלת כמות העמודים
-export async function getTotalOrderPages(req, res){
+export async function getTotalOrderPages(req, res) {
     let limit = req.query.limit || 20;
-    try{
+    try {
         let data = await orderModel.countDocuments();
         res.json({
             totalCount: data,
@@ -195,9 +182,9 @@ export async function getTotalOrderPages(req, res){
             limit: limit
         }
         );
-        }
-        catch(err){
-            res.status(400).json({title:"שגיאה בהבאת כמות העמודים", message:err.message});
+    }
+    catch (err) {
+        res.status(400).json({ title: "שגיאה בהבאת כמות העמודים", message: err.message });
     }
 }
 

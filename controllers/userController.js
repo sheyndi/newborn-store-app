@@ -145,7 +145,7 @@ export async function getTotalUserPages(req, res) {
         res.json({
             totalCount: data,
             totalPages: Math.ceil(data / limit),
-            limit: limitF
+            limit: limit
         }
         );
     }
