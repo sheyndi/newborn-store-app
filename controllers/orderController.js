@@ -39,15 +39,11 @@ export const deleteOrder = async (req, res) => {
     let { id } = req.params;
 
     try {
-        //שליפת ההזמנה לצורך בדיקות תקינות
         let order = await ORDERS.findById(id)
-        //בדיקה האם ההזמנה קיימת
         if (!order)
             return res.status(400).json({ title: "not found this order", message: "id is not exist in GIFTS" })
-        //האם ההזמנה כבר יצאה לדרך
         if (order.is_sending == true)
             return res.status(400).json({ title: "cannot delete order", message: "The order has already started" })
-        //האם עברו יותר מ 5 ימי עסקים מיום ההזמנה
         if ((new Date() - order.date_order) / (1000 * 60 * 60 * 24) > 5)
             return res.status(400).json({ title: "cannot delete order", message: "5 business days have already passed" })
 
@@ -64,40 +60,34 @@ export const deleteOrder = async (req, res) => {
 //הוספת הזמנה
 export const addOrder = async (req, res) => {
     let body = req.body;
-    //בדיקות תקינות:
-    //required האם נשלחו כל המאפיינים שהם 
     if (!body.id_user || !body.products)
         return res.status(400).json({ title: "missing parameters", message: "Not all required parameters were received" })
 
     try {
-        //שליפת המשתמש לצורך בדיקות תקינות
         let user = await USERS.findById(body.id_user)
-        //האם המשתמש קיים
         if (!user)
             return res.status(400).json({ title: "cannot add order", message: "id_user is not exist" })
-        for(const prod of body.products) {
-            //שליפת המוצר לצורך בדיקות תקינות
+
+        for (const prod of body.products) {
+            if(!prod.id_gift_in_GIFTS||!prod.quantity||prod.name||!prod.price)
+                return res.status().json({title:"", message:""})
             let gift = await GIFTS.findById(prod.id_gift_in_GIFTS)
-            //האם המוצר קיים
             if (!gift)
                 return res.status(400).json({ title: "cannot add order", message: "product is not exist" })
-            //האם כמות המלאי מספיקה לכמות המבוקשת בהזמנה
             if (gift.quantity_in_stock - prod.quantity < 0)
                 return res.status(400).json({ title: "This product cannot be ordered", message: "The product is out of stock" })
-            //מחיקת מאפיין מחיר
             prod.price = gift.price;
-                    let giftUpdate = await GIFTS.findByIdAndUpdate(prod.id_gift_in_GIFTS, { quantity_in_stock: gift.quantity_in_stock - prod.quantity }, { new: true })
+            await GIFTS.findByIdAndUpdate(prod.id_gift_in_GIFTS, { quantity_in_stock: gift.quantity_in_stock - prod.quantity }, { new: true })
         };
-         //האם תאריך קבלת ההזמנה קטן מהיום הנוכחי
-            if (body.target_date && new Date(body.target_date) < Date.now())
-                return res.status(400).json({ title: "Invalid date", message: "The received date has passed" })
-            //האם מחיר המשלוח תקין
-            if (body.price_sending && body.price_sending < 0)
-                return res.status(400).json({ title: "Invalid price", message: "The price must be greater than 0" })
-        //הוספת המוצר
+
+        if (body.target_date && new Date(body.target_date) < Date.now())
+            return res.status(400).json({ title: "Invalid date", message: "The received date has passed" })
+        if (body.price_sending && body.price_sending < 0)
+            return res.status(400).json({ title: "Invalid price", message: "The price must be greater than 0" })
+
         let newOrder = new ORDERS(body)
         let data = await newOrder.save();
-        //עדכון מלאי המוצר שהוזמן להיות פחות הכמות שהוזמנה
+
         res.json(data);
     }
     catch (err) {
