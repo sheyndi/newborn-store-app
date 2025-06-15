@@ -42,11 +42,9 @@ PORT = "8080"
 RESEND_API_KEY = "key_test_1234567890abcdef1234567890abcdef"
 ```
 4. **Create the MySQL database:**
-4. **Create the MySQL database:**  
 Make sure the MySQL server is running, then you can create the database in two ways:
 
 - Via the command line (terminal) – run the following command:  
-
 ```bash
 mysql -u your_user_name -p < db/schema.sql
 ```
@@ -66,11 +64,15 @@ npm run dev
 src/
 ├── routes/         # Routes
 ├── controllers/    # Request logic
-├── models/         # Database queries
+├── queries/        # Database queries
 ├── middleware/     # Authorization, error handling
 ├── config/         # DB connection
-├── types/          # TypeScript types
-└── server.ts        # Entry point
+├── utils/          # TypeScript types
+├── db/             # TypeScript types
+├── ApiDocs/        # TypeScript types
+└── server.ts       # Entry point
+├── structures/     # TypeScript types
+
 ```
 
 
@@ -104,7 +106,7 @@ src/
             <td>GET</td>
             <td>/api/user/getUserDetails</td>
             <td>-</td>
-            <td>userId: string</td>
+            <td><b>x-user-uid</b>: userId</td>
             <td>-</td>
             <td>Get user details by ID</td>
             <td>
@@ -124,7 +126,7 @@ src/
             <td>POST</td>
             <td>/api/user/addOrUpdateUser</td>
             <td>-</td>
-            <td>userId: string</td>
+            <td><b>x-user-uid</b>: userId</td>
             <td>
 <pre>
 { 
@@ -152,7 +154,7 @@ OR
             <td>PATCH</td>
             <td>/api/user/favorites/</td>
             <td>-</td>
-            <td>userId: string</td>
+            <td><b>x-user-uid</b>: userId</td>
             <td>
 <pre>
 {
@@ -181,7 +183,7 @@ OR
         <tr>
             <td>DELETE</td>
             <td>/api/user/:userId</td>
-            <td>userId: string</td>
+            <td><b>x-user-uid</b>: userId</td>
             <td>userId: string</td>
             <td>-</td>
             <td>Delete user by ID</td>
