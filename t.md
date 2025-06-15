@@ -375,7 +375,7 @@ OR
                 <td><pre>
         <span>title:</span>"Hotel Found",
         <span>message:</span> "Hotel found successfully.",
-        <span>data:</span> [יעחךיך](#hotel-object)
+        <span>data:</span> <a href="#hotel-object">אובייקט מלון</a>
                         </pre></td>
                 <td>
                     <ul>
