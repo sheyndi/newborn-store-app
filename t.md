@@ -304,19 +304,7 @@ OR
             OR
              <span>title:</span> "Fallback Results",
             <span>message:</span>  "No results found for query. Showing default recommendations.",
-            <span> data:</span> [{
-                id: string,
-                name: string,
-                city: string,
-                country: string,
-                location: JSON { 
-                    latitude: number, 
-                    longitude: number 
-                },
-                pictures: JSON,
-                totalReviews: number,
-                rating: number
-            },...]
+            <span> data:</span> [#hotel-object]
         }</pre>
                 </td>
                 <td>
@@ -343,18 +331,7 @@ OR
     {
         <span>title:</span> "Success",
         <span>message:</span> "Hotels retrieved successfully.",
-        <span>data:</span> [{
-            id: string,
-            name: string,
-            city: string,
-            country: string,
-            location:  { 
-                latitude: number, 
-                longitude: number },
-            reviews: [ string ],
-            totalReviews: number,
-            rating: number
-        },...]
+        <span>data:</span> [#hotel-object]
     }</pre>
                 </td>
                 <td>
@@ -378,18 +355,7 @@ OR
     {
         <span>title:</span> "Success",
         <span>message:</span> "Hotels retrieved successfully.",
-        <span>data:</span> [{
-            id: string,
-            name: string,
-            city: string,
-            country: string,
-            location:  { 
-                latitude: number, 
-                longitude: number },
-            reviews: [ string ],
-            totalReviews: number,
-            averageRating: number
-        },...]
+        <span>data:</span> [#hotel-object]
     }</pre>
                 <td>
                     <ul>
@@ -409,19 +375,7 @@ OR
                 <td><pre>
         <span>title:</span>"Hotel Found",
         <span>message:</span> "Hotel found successfully.",
-        <span>data:</span>
-        {
-            id: string,
-            name: string,
-            city: string,
-            country: string,
-            location:  { 
-                latitude: number, 
-                longitude: number },
-            reviews: [ string ],
-            totalReviews: number,
-            averageRating: number
-        }
+        <span>data:</span> #hotel-object
                         </pre></td>
                 <td>
                     <ul>
@@ -433,3 +387,19 @@ OR
             </tr>
     </tbody>
 </table>
+
+### Hotel Object
+
+{
+  "id": "string",
+  "name": "string",
+  "city": "string",
+  "country": "string",
+  "location": {
+    "latitude": number,
+    "longitude": number
+  },
+  "pictures": ["string"],
+  "totalReviews": number,
+  "averageRating": number
+}
