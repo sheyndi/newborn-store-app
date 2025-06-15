@@ -269,7 +269,9 @@ OR
             <td>/api/hotel/add</td>
             <td>-</td>
             <td>adminId</td>
-            <td><pre>{ "hotelName": string, "city": string, "location": { "latitude": number, "longitude": number }, "pictures"?: string[] }</pre></td>
+            <td><pre>{ "hotelName": string, "city": string,
+             "location": { "latitude": number, "longitude": number },
+              "pictures"?: string[] }</pre></td>
             <td>Creates a new hotel in the database</td>
             <td><pre>{ "message": "Hotel created successfully", "hotelId": string }</pre></td>
             <td>
