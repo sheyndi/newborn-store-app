@@ -355,7 +355,7 @@ OR
     {
         <span>title:</span> "Success",
         <span>message:</span> "Hotels retrieved successfully.",
-        <span>data:</span> [#hotel-object]
+        <span>data:</span> [(#hotel-object)]
     }</pre>
                 <td>
                     <ul>
@@ -375,7 +375,7 @@ OR
                 <td><pre>
         <span>title:</span>"Hotel Found",
         <span>message:</span> "Hotel found successfully.",
-        <span>data:</span> #hotel-object
+        <span>data:</span> (#hotel-object)
                         </pre></td>
                 <td>
                     <ul>
