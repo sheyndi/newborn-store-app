@@ -111,22 +111,7 @@ src/
 { 
   title: "Success",
   message: "User details fetched successfully.",
-  data: {
-    id: string,
-    first_name: string,
-    last_name: string,
-    phone: string,
-    address: string,
-    profilePicture: string,
-    role: string,
-    authMethod: string,
-    location: {
-      latitude: number, 
-      longitude: number
-    },
-    loved_Hotels: [...],
-    created_at: date
-  }
+  data: <a href="#user-object">user</a>
 }
 </pre>
             </td>
@@ -269,8 +254,12 @@ OR
             <td>/api/hotel/add</td>
             <td>-</td>
             <td>adminId</td>
-            <td><pre>{ "hotelName": string, "city": string,
-             "location": { "latitude": number, "longitude": number },
+            <td><pre>
+            { "hotelName": string, 
+            "city": string,
+             "location": { 
+                "latitude": number, 
+                "longitude": number },
               "pictures"?: string[] }</pre></td>
             <td>Creates a new hotel in the database</td>
             <td><pre>{ "message": "Hotel created successfully", "hotelId": string }</pre></td>
@@ -303,8 +292,9 @@ OR
             <span>message:</span> "Hotels retrieved successfully.",
             OR
              <span>title:</span> "Fallback Results",
-            <span>message:</span>  "No results found for query. Showing default recommendations.",
-            <span> data:</span> [#hotel-object]
+            <span>message:</span>  "No results found for query.
+             Showing default recommendations.",
+            <span> data:</span> [<a href="#hotel-object">אובייקט מלון</a>]
         }</pre>
                 </td>
                 <td>
@@ -331,7 +321,7 @@ OR
     {
         <span>title:</span> "Success",
         <span>message:</span> "Hotels retrieved successfully.",
-        <span>data:</span> [#hotel-object]
+        <span>data:</span> [<a href="#hotel-object">אובייקט מלון</a>]
     }</pre>
                 </td>
                 <td>
@@ -355,7 +345,7 @@ OR
     {
         <span>title:</span> "Success",
         <span>message:</span> "Hotels retrieved successfully.",
-        <span>data:</span> [(#hotel-object)]
+        <span>data:</span> [<a href="#hotel-object">אובייקט מלון</a>]
     }</pre>
                 <td>
                     <ul>
@@ -387,6 +377,11 @@ OR
             </tr>
     </tbody>
 </table>
+
+### User Object
+{
+    gfyuhj
+}
 
 ### Hotel Object
 
