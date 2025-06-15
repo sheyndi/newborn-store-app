@@ -351,13 +351,11 @@ OR
             <td>userId</td>
             <td><pre>{ "query": string }</pre></td>
             <td>Adds a new search for the user (if it doesn't already exist)</td>
-            <td><pre>{ "title": "Success", "message": "Search saved successfully." }</pre></td>
+            <td><pre>
+            { "title": "Success", 
+            "message": "Search saved successfully." }</pre></td>
             <td>
-                <ul>
-                    <li>400 - Missing required fields</li>
-                    <li>409 - Search already exists</li>
-                    <li>500 - Server error</li>
-                </ul>
+                400, 500
             </td>
         </tr>
         <tr>
@@ -367,13 +365,12 @@ OR
             <td>userId</td>
             <td>-</td>
             <td>Returns all user searches in descending time order</td>
-            <td><pre>{ "title": "Success", "message": "User searches fetched successfully.", "data": [query:string, ...] }</pre></td>
+            <td><pre>
+            { "title": "Success",
+              "message": "User searches fetched successfully.", 
+              "data": [query:string, ...] }</pre></td>
             <td>
-                <ul>
-                    <li>400 - Missing user ID</li>
-                    <li>404 - No searches found</li>
-                    <li>500 - Server error</li>
-                </ul>
+                400, 404, 500
             </td>
         </tr>
         <tr>
@@ -383,13 +380,12 @@ OR
             <td>-</td>
             <td>-</td>
             <td>Returns search suggestions based on partial text</td>
-            <td><pre>{ "title": "Success", "message": "User searches fetched successfully.", "data": [query:string, ...] }</pre></td>
+            <td><pre>
+            { "title": "Success",
+             "message": "User searches fetched successfully.",
+             "data": [query:string, ...] }</pre></td>
             <td>
-                <ul>
-                    <li>400 - Missing 'query' field</li>
-                    <li>404 - No suggestions found</li>
-                    <li>500 - Server error</li>
-                </ul>
+                400, 404, 500
             </td>
         </tr>
     </tbody>
@@ -417,16 +413,18 @@ OR
             <td>/api/review/addReview</td>
             <td>-</td>
             <td>userId</td>
-            <td><pre>{ "hotelId": string, "rating": number (1-5), "text": string, "pictures": string[] }</pre></td>
+            <td><pre>
+            { "hotelId": string,
+             "rating": number (1-5),
+             "text": string,
+             "pictures": string[] }</pre></td>
             <td>Adds a new review to a hotel and updates its rating</td>
-            <td><pre>{ "title": "Review added successfully", "message": "Your review has been added!", "reviewId": string }</pre></td>
+            <td><pre>
+            { "title": "Review added successfully",
+             "message": "Your review has been added!",
+             "reviewId": string }</pre></td>
             <td>
-                <ul>
-                    <li>400 - Missing fields</li>
-                    <li>400 - Invalid rating</li>
-                    <li>500 - Failed to update hotel rating</li>
-                    <li>500 - Server error</li>
-                </ul>
+                400, 400, 500
             </td>
         </tr>
         <tr>
@@ -436,13 +434,11 @@ OR
             <td>-</td>
             <td><pre>{ "reviewId": string, "picturesToAdd": string[], "picturesToRemove": string[] }</pre></td>
             <td>Adds or removes pictures from an existing review</td>
-            <td><pre>{ "title": "Pictures updated", "message": "Pictures have been updated successfully." }</pre></td>
+            <td><pre>
+            { "title": "Pictures updated", 
+            "message": "Pictures have been updated successfully." }</pre></td>
             <td>
-                <ul>
-                    <li>400 - Missing or invalid fields</li>
-                    <li>400 - Update failed</li>
-                    <li>500 - Server error</li>
-                </ul>
+                400, 400, 500
             </td>
         </tr>
         <tr>
@@ -452,13 +448,11 @@ OR
             <td>-</td>
             <td>-</td>
             <td>Returns reviews by their IDs</td>
-            <td><pre>{ "title": "Reviews fetched successfully", "data": [ { id, hotelId, userId, rating, text, pictures, timestamp }, ... ] }</pre></td>
+            <td><pre>
+            { "title": "Reviews fetched successfully", 
+            "data": [<a href="#review-object">Review</a>] }</pre></td>
             <td>
-                <ul>
-                    <li>400 - Missing or invalid fields</li>
-                    <li>400 - Update failed</li>
-                    <li>500 - Server error</li>
-                </ul>
+                400, 400, 500
             </td>
         </tr>
         <tr>
@@ -468,14 +462,11 @@ OR
             <td>userId</td>
             <td>-</td>
             <td>Deletes a review by its ID</td>
-            <td><pre>{ "title": "Success", "message": "Review deleted successfully." }</pre></td>
+            <td><pre>
+            { "title": "Success",
+             "message": "Review deleted successfully." }</pre></td>
             <td>
-                <ul>
-                    <li>400 - Missing review ID</li>
-                    <li>404 - Review not found</li>
-                    <li>403 - User not authorized</li>
-                    <li>500 - Server error</li>
-                </ul>
+                400, 404, 403, 500
             </td>
         </tr>
         <tr>
@@ -492,13 +483,12 @@ OR
             <td>-</td>
             <td>-</td>
             <td>Returns reviews for a hotel by rating if provided, otherwise returns last 3 reviews</td>
-            <td><pre>{ "title": "Reviews Fetched", "message": "...", "data": [ { id, hotelId, userId, rating, text, pictures, timestamp }, ... ] }</pre></td>
+            <td><pre>
+            { "title": "Reviews Fetched", 
+            "message": "...", 
+            "data": [<a href="#review-object">Review</a>] }</pre></td>
             <td>
-                <ul>
-                    <li>400 - Missing or invalid fields</li>
-                    <li>404 - No reviews found</li>
-                    <li>500 - Server error</li>
-                </ul>
+                400, 404, 500
             </td>
         </tr>
         <tr>
@@ -508,12 +498,12 @@ OR
             <td>-</td>
             <td>-</td>
             <td>Returns all reviews for a specific hotel</td>
-            <td><pre>{ "title": "Reviews fetched successfully", "message": "Reviews for the hotel have been retrieved.", "reviews": [ { id, hotelId, userId, rating, text, pictures, timestamp }, ... ] }</pre></td>
+            <td><pre>
+            { "title": "Reviews fetched successfully", 
+            "message": "Reviews for the hotel have been retrieved.", 
+            "reviews": [<a href="#review-object">Review</a>] }</pre></td>
             <td>
-                <ul>
-                    <li>Missing hotelId</li>
-                    <li>500 - DB or review error</li>
-                </ul>
+                400, 500
             </td>
         </tr>
     </tbody>
