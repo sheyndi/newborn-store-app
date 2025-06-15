@@ -393,7 +393,7 @@ OR
 
 ---
 
-<h2>Review</h2>
+
 <table>
     <thead>
         <tr>
@@ -513,6 +513,56 @@ OR
 </table>
 ---
 
+<table>
+    <thead>
+        <tr>
+            <th>CRUD</th>
+            <th>Endpoint</th>
+            <th>Parameters</th>
+            <th>Headers</th>
+            <th>Body</th>
+            <th>Description</th>
+            <th>Response</th>
+            <th>Possible Errors</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>GET</td>
+            <td>/api/comment/getCommentsByReviewId/:reviewId</td>
+            <td>{ limit?: number,<br>page?: number,<br>reviewId: string }</td>
+            <td>-</td>
+            <td>-</td>
+            <td>Returns all comments associated with a specific review</td>
+            <td><pre>{
+"message": "Comments fetched successfully",
+"reviewId": "string",
+"comments": [<a href="#comment-object">Comment</a>]]
+}</pre></td>
+            <td>400, 500</td>
+        </tr>
+
+        <tr>
+            <td>POST</td>
+            <td>/api/comment/addComment</td>
+            <td>-</td>
+            <td>userId</td>
+            <td><pre>{
+"reviewId": "string",
+"text": "string"
+}</pre></td>
+            <td>Adds a new comment to a review</td>
+            <td><pre>{
+"message": "Comment added successfully",
+"commentId": "string"
+}</pre></td>
+            <td>400, 500</td>
+        </tr>
+    </tbody>
+</table>
+---
+
+
 ## 🧾 Objects
 
 ### User Object
@@ -544,5 +594,33 @@ OR
   "pictures": ["string"],
   "totalReviews": "number",
   "averageRating": "number"
+}
+```
+
+
+### Review Object
+
+```json
+{
+  "id": "string",
+  "hotelId": "string",
+  "userId": "string",
+  "rating": "number",
+  "text": "string",
+  "timestamp": "Date",
+  "pictures": "string"[]
+}
+```
+
+
+### Comment Object
+
+```json
+{
+  "id": "string",
+  "reviewId": "string",
+  "userId": "string",
+  "text": "string",
+  "timestamp": "Date"
 }
 ```
