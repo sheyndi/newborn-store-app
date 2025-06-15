@@ -196,12 +196,13 @@ OR
     </tbody>
 </table>
 
-| Method | Endpoint                   | Params | Headers        | Body | Description                             | Response | Errors |
-|--------|----------------------------|--------|----------------|------|-----------------------------------------|----------|--------|
-| GET    | `/api/user/getUserDetails` | –      | `userId`       | –    | Get user details by ID                  | `{ message, data: user }` | 400, 404, 500 |
-| POST   | `/api/user/addOrUpdateUser`| –      | `userId`       | `{ first_name, last_name, ... }` | Add or update user by ID | `{ message, userId? }` | 400, 500 |
-| PATCH  | `/api/user/favorites`      | –      | `userId`       | `{ hotelId, action: "add" | "remove" }` | Update favorite hotels list | `{ message, updatedList }` | 400, 404, 500 |
-| DELETE | `/api/user/:userId`        | URL ID | `userId`       | –    | Delete user by ID                       | `{ message }` | 400, 404, 430, 500 |
+| Method | Endpoint                   | Params  | Headers  | Body                                                  | Description                    | Response                                                                 | Errors              |
+|--------|----------------------------|---------|----------|--------------------------------------------------------|--------------------------------|--------------------------------------------------------------------------|---------------------|
+| GET    | `/api/user/getUserDetails` | –       | `userId` | –                                                      | Get user details by ID         | `{ title, message, data: user }`                                         | 400, 404, 500       |
+| POST   | `/api/user/addOrUpdateUser`| –       | `userId` | `{ first_name, last_name, phone?, address?, profile_picture? }` | Add or update user by ID | `{ message: "...", userId? }`                                            | 400, 500            |
+| PATCH  | `/api/user/favorites`      | –       | `userId` | `{ hotelId, action: "add" | "remove" }`                     | Update favorite hotels list    | `{ title, message, hotelId, action, updatedList: [...], userId }`       | 400, 404, 500       |
+| DELETE | `/api/user/:userId`        | `userId`| `userId` | –                                                      | Delete user by ID              | `{ title, message }`                                                     | 400, 404, 430, 500  |
+
 
 ---
 
