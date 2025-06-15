@@ -38,15 +38,19 @@ DB_PASSWORD = "your_password"
 DB_USER = "your_user_name"
 DB_NAME = "focus"
 
-PORT = "8000"
+PORT = "8080"
 RESEND_API_KEY = "key_test_1234567890abcdef1234567890abcdef"
 ```
 4. **Create the MySQL database:**
-Make sure MySQL is running, then run the following in terminal:
+4. **Create the MySQL database:**  
+Make sure the MySQL server is running, then you can create the database in two ways:
+
+- Via the command line (terminal) – run the following command:  
+
 ```bash
 mysql -u your_user_name -p < db/schema.sql
 ```
-Or manually inside MySQL CLI:
+- Or manually inside the MySQL CLI – open MySQL and run the contents of the db/schema.sql file yourself.
 
 5. **Run the application:**
 
