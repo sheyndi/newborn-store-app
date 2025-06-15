@@ -541,7 +541,6 @@ OR
 }</pre></td>
             <td>400, 500</td>
         </tr>
-
         <tr>
             <td>POST</td>
             <td>/api/comment/addComment</td>
@@ -562,6 +561,142 @@ OR
 </table>
 ---
 
+<table>
+    <thead>
+        <tr>
+            <th>CRUD</th>
+            <th>Endpoint</th>
+            <th>Parameters</th>
+            <th>Headers</th>
+            <th>Body</th>
+            <th>Description</th>
+            <th>Response</th>
+            <th>Possible Errors</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>POST</td>
+            <td>/api/report/</td>
+            <td>-</td>
+            <td>userId</td>
+            <td><pre>{
+"context": "review" | "hotel",
+"targetId": string,
+"text": string
+}</pre></td>
+            <td>Submits a report on a hotel or review</td>
+            <td><pre>{
+"title": "Report Submitted",
+"message": "Report submitted successfully",
+"reportId": string 
+}</pre></td>
+            <td>422, 400, 404, 404, 500, 500</td>
+        </tr>
+    </tbody>
+</table>
+---
+
+<table>
+    <thead>
+        <tr>
+            <th>CRUD</th>
+            <th>Endpoint</th>
+            <th>Parameters</th>
+            <th>Headers</th>
+            <th>Body</th>
+            <th>Description</th>
+            <th>Response</th>
+            <th>Possible Errors</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>GET</td>
+            <td>/api/admin/stats</td>
+            <td>-</td>
+            <td>adminId</td>
+            <td>-</td>
+            <td>Returns statistics: user, review, hotel, and search counts (including monthly breakdown)</td>
+            <td><pre>{
+"success": true,
+"message": "Statistics fetched successfully",
+"data": {
+"totalUsers": number,
+"totalReviews": number,
+"totalHotels": number,
+"totalSearchesHistory": number,
+"usersPerMonth": [ { "month": string, "count": number } ],
+"searchesPerMonth": [ { "month": string, "count": number } ]
+}
+}</pre></td>
+            <td>403, 500</td>
+        </tr>
+    </tbody>
+</table>
+ ---
+
+ <table>
+    <thead>
+        <tr>
+            <th>CRUD</th>
+            <th>Endpoint</th>
+            <th>Parameters</th>
+            <th>Headers</th>
+            <th>Body</th>
+            <th>Description</th>
+            <th>Response</th>
+            <th>Possible Errors</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>GET</td>
+            <td>/api/systemMessages/activeitiMassege</td>
+            <td>-</td>
+            <td>userId</td>
+            <td>-</td>
+            <td>Returns all active and relevant system messages</td>
+            <td><pre>{
+"title": "Success",
+"message": "System messages fetched successfully.",
+"data": [ {
+id: string,
+title: string,
+content: string
+}, ... ]
+}</pre></td>
+            <td>403, 500</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td>/api/systemMessages/</td>
+            <td>-</td>
+            <td>userId</td>
+            <td><pre>{
+"title": string,
+"content": string,
+"status"?: "active" | "archived",
+"expiresAt"?: date
+}</pre></td>
+            <td>Adds a new system message</td>
+            <td><pre>{
+"title": "Success",
+"message": "System message added successfully.",
+"data": {
+id: string,
+title: string,
+content: string,
+status: "active" | "archived",
+createdAt: date,
+expiresAt: date
+}
+}</pre></td>
+            <td>400, 500</td>
+        </tr>
+    </tbody>
+</table>
+ ---
 
 ## 🧾 Objects
 
