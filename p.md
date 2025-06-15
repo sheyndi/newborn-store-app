@@ -196,14 +196,6 @@ OR
     </tbody>
 </table>
 
-| Method | Endpoint                   | Params  | Headers  | Body                                                  | Description                    | Response                                                                 | Errors              |
-|--------|----------------------------|---------|----------|--------------------------------------------------------|--------------------------------|--------------------------------------------------------------------------|---------------------|
-| GET    | `/api/user/getUserDetails` | –       | `userId` | –                                                      | Get user details by ID         | `{ title, message, data: user }`                                         | 400, 404, 500       |
-| POST   | `/api/user/addOrUpdateUser`| –       | `userId` | `{ first_name, last_name, phone?, address?, profile_picture? }` | Add or update user by ID | `{ message: "...", userId? }`                                            | 400, 500            |
-| PATCH  | `/api/user/favorites`      | –       | `userId` | `{ hotelId, action: "add" | "remove" }`                     | Update favorite hotels list    | `{ title, message, hotelId, action, updatedList: [...], userId }`       | 400, 404, 500       |
-| DELETE | `/api/user/:userId`        | `userId`| `userId` | –                                                      | Delete user by ID              | `{ title, message }`                                                     | 400, 404, 430, 500  |
-
-
 ---
 
 ## 🔐 Authentication
@@ -227,13 +219,132 @@ OR
 
 ## 🏨 Hotels
 
-| Method | Endpoint                        | Params / Query | Headers   | Body                         | Description                       | Response | Errors |
-|--------|----------------------------------|----------------|-----------|------------------------------|-----------------------------------|----------|--------|
-| POST   | `/api/hotel/add`                | –              | `adminId` | `{ hotelName, city, location, pictures? }` | Create new hotel                 | `{ hotelId }` | 400, 409, 500 |
-| GET    | `/api/hotel/getHotelsBySearch`  | `{ query, limit?, page? }` | `userId?` | – | Search hotels by query         | `{ data: [Hotel], message }` | 400, 404, 500 |
-| GET    | `/api/hotel/getFilteredHotelFeed`| `userLat, userLon, filtering, limit?, page?` | – | – | Filtered hotel feed            | `{ data: [Hotel] }` | 400, 404, 500 |
-| GET    | `/api/hotel/sorted-by-distance` | `userLat, userLon, limit?, page?` | – | – | Hotels sorted by distance      | `{ data: [Hotel] }` | 400, 404, 500 |
-| GET    | `/api/hotel/navigateToHotel`    | `userLat, userLon` | – | – | Get closest hotel             | `{ data: Hotel }` | 400, 404, 500 |
+<table>
+    <thead>
+        <tr>
+            <th>CRUD</th>
+            <th>Endpoint</th>
+            <th>Parameters</th>
+            <th>Headers</th>
+            <th>Body</th>
+            <th>Description</th>
+            <th>Response</th>
+            <th>Possible Errors</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>POST</td>
+            <td>/api/hotel/add</td>
+            <td>-</td>
+            <td>adminId</td>
+            <td><pre>
+            { "hotelName": string, 
+            "city": string,
+             "location": { 
+                "latitude": number, 
+                "longitude": number },
+              "pictures"?: string[] }</pre></td>
+            <td>Creates a new hotel in the database</td>
+            <td><pre>{ "message": "Hotel created successfully", "hotelId": string }</pre></td>
+            <td>
+                <ul>
+                    <li>400 - Missing fields</li>
+                    <li>409 - Hotel name already exists</li>
+                    <li>500 - Database error</li>
+                </ul>
+            </td>
+        </tr>
+          <tr>
+                <td>GET</td>
+                <td>/api/hotel/getHotelsBySearch</td>
+                <td>            
+        {<br />
+            limit?: number,
+            page?: number,<br />
+            "query": string
+        }
+                </td>
+                <td>userId?</td>
+                <td>
+                    -
+                </td>
+                <td>Search hotels by query</td>
+                <td><pre>
+        {   
+            <span>title:</span> "Success",
+            <span>message:</span> "Hotels retrieved successfully.",
+            OR
+             <span>title:</span> "Fallback Results",
+            <span>message:</span>  "No results found for query.
+             Showing default recommendations.",
+            <span> data:</span> [<a href="#hotel-object">Hotel</a>]
+        }</pre>
+                </td>
+                <td>
+                    400, 404, 500
+                </td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/api/hotel/getFilteredHotelFeed</td>
+                <td>
+                    userLat: number, userLon: number,
+                    filtering: string ("Near_by" | "Popular" | "Best_Reviews"),
+                    limit?: number, page?: number
+                </td>
+                <td>-</td>
+                <td>-</td>
+                <td>Filtered hotel feed</td>
+                <td>
+                    <pre>
+    {
+        <span>title:</span> "Success",
+        <span>message:</span> "Hotels retrieved successfully.",
+        <span>data:</span> [<a href="#hotel-object">Hotel</a>]
+    }</pre>
+                </td>
+                <td>
+                    400, 404, 500
+                </td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/api/hotel/sorted-by-distance</td>
+                <td>userLat: number, userLon: number,
+                    limit?: number, page?: number</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Hotels sorted by distance</td>
+                <td>
+                    <pre>
+    {
+        <span>title:</span> "Success",
+        <span>message:</span> "Hotels retrieved successfully.",
+        <span>data:</span> [<a href="#hotel-object">Hotel</a>]
+    }</pre>
+                <td>
+                    400, 404, 500
+                </td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/api/hotel/navigateToHotel</td>
+                <td>userLat: number, userLon: number</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Get closest hotel</td>
+                <td><pre>
+        <span>title:</span>"Hotel Found",
+        <span>message:</span> "Hotel found successfully.",
+        <span>data:</span> <a href="#hotel-object">Hotel</a>
+                        </pre></td>
+                <td>
+                    400, 404, 500
+                </td>
+            </tr>
+    </tbody>
+</table>
 
 ---
 
