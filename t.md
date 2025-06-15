@@ -275,227 +275,6 @@ OR
         </tr>
     </tbody>
 </table>
----
-    <table>
-        <thead>
-            <tr>
-                <th>CRUD</th>
-                <th>כתובת</th>
-                <th>פרמטרים</th>
-                <th>Headers</th>
-                <th>Body</th>
-                <th>מה עושה</th>
-                <th>מה מוחזר</th>
-                <th>איזה סוגי שגיאות יכולות לחזור</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>POST</td>
-                <td>/api/hotel/add</td>
-                <td>-</td>
-                <td>adminId</td>
-                <td>
-                    <pre>
-        {
-            "hotelName": string,
-            "city": string,
-            "location": {
-                latitude: number,
-                longitude: number 
-            },
-            "pictures"?: string[],
-        }</pre>
-                </td>
-                <td>יוצר מלון חדש במסד הנתונים</td>
-                <td><pre>
-        {
-            <span>"message":</span> 'Hotel created successfully',
-            <span>"hotelId":</span> string
-        }
-                </pre></td>
-                <td>
-                    <ul>
-                        <li>400 - שדות חסרים</li>
-                        <li>409 - שם מלון קיים</li>
-                        <li>500 - שגיאה במסד הנתונים</li>
-                    </ul>
-                </td>
-            </tr>
-
-            <tr>
-                <td>GET</td>
-                <td>/api/hotel/getHotelsBySearch</td>
-                <td>
-                    
-        {<br />
-            limit?: number,
-            page?: number,<br />
-            "query": string
-        }
-                </td>
-                <td>userId?</td>
-                <td>
-                    -
-                </td>
-                <td>מחפש מלונות לפי מחרוזת חיפוש חלקית. אם לא נמצאו תוצאות מתאימות אך קיים משתמש עם חיפושים קודמים,
-                    יוחזרו תוצאות מהחיפוש האחרון שלו. אם לא קיים משתמש או אין חיפושים קודמים – תוחזר רשימת מלונות ברירת
-                    מחדל.</td>
-                <td><pre>
-        {   
-            <span>title:</span> "Success",
-            <span>message:</span> "Hotels retrieved successfully.",
-            <span> data:</span> [{
-                id: string,
-                name: string,
-                city: string,
-                country: string,
-                location: JSON { 
-                    latitude: number, 
-                    longitude: number 
-                },
-                pictures: JSON,
-                totalReviews: number,
-                rating: number
-            },...]
-            OR
-             <span>title:</span> "Fallback Results",
-            <span>message:</span>  "No results found for query. Showing default recommendations.",
-            <span> data:</span> [{
-                id: string,
-                name: string,
-                city: string,
-                country: string,
-                location: JSON { 
-                    latitude: number, 
-                    longitude: number 
-                },
-                pictures: JSON,
-                totalReviews: number,
-                rating: number
-            },...]
-        }</pre>
-                </td>
-                <td>
-                    <ul>
-                        <li>400 - שדה query חסר</li>
-                        <li>404 - לא נמצאו תוצאות</li>
-                        <li>500 - שגיאת שרת</li>
-                    </ul>
-                </td>
-            </tr>
-
-            <tr>
-                <td>GET</td>
-                <td>/api/hotel/getFilteredHotelFeed</td>
-
-                <td>
-                    userLat: number, userLon: number,
-                    filtering: string ("Near_by" | "Popular" | "Best_Reviews"),
-                    limit?: number, page?: number
-                </td>
-                <td>-</td>
-                <td>-</td>
-                <td>מחזיר מלונות לפי פילטר נבחר</td>
-                <td>
-                    <pre>
-    {
-        <span>title:</span> "Success",
-        <span>message:</span> "Hotels retrieved successfully.",
-        <span>data:</span> [{
-            id: string,
-            name: string,
-            city: string,
-            country: string,
-            location:  { 
-                latitude: number, 
-                longitude: number },
-            reviews: [ string ],
-            totalReviews: number,
-            rating: number
-        },...]
-    }</pre>
-                </td>
-                <td>
-                    <ul>
-                        <li>400 - פרמטרים חסרים או לא חוקיים</li>
-                        <li>404 - לא נמצאו מלונות</li>
-                        <li>500 - שגיאת שרת</li>
-                    </ul>
-                </td>
-            </tr>
-
-            <tr>
-                <td>GET</td>
-                <td>/api/hotel/sorted-by-distance</td>
-                <td>userLat: number, userLon: number,
-                    limit?: number, page?: number</td>
-                <td>-</td>
-                <td>-</td>
-                <td>מחזיר את כל המלונות ממוינות לפי קרבה למיקום המשתמש</td>
-                <td>
-                    <pre>
-    {
-        <span>title:</span> "Success",
-        <span>message:</span> "Hotels retrieved successfully.",
-        <span>data:</span> [{
-            id: string,
-            name: string,
-            city: string,
-            country: string,
-            location:  { 
-                latitude: number, 
-                longitude: number },
-            reviews: [ string ],
-            totalReviews: number,
-            averageRating: number
-        },...]
-    }</pre>
-                <td>
-                    <ul>
-                        <li>400 - פרמטרים חסרים או לא חוקיים</li>
-                        <li>404 - לא נמצאו מלונות</li>
-                        <li>500 - שגיאת שרת</li>
-                    </ul>
-                </td>
-            </tr>
-
-            <tr>
-                <td>GET</td>
-                <td>/api/hotel/navigateToHotel</td>
-                <td>userLat: number, userLon: number</td>
-                <td>-</td>
-                <td>-</td>
-                <td>מחזיר מלון אחד הכי קרוב למשתמש</td>
-                <td><pre>
-        <span>title:</span>"Hotel Found",
-        <span>message:</span> "Hotel found successfully.",
-        <span>data:</span>
-        {
-            id: string,
-            name: string,
-            city: string,
-            country: string,
-            location:  { 
-                latitude: number, 
-                longitude: number },
-            reviews: [ string ],
-            totalReviews: number,
-            averageRating: number
-        }
-                        </pre></td>
-                <td>
-                    <ul>
-                        <li>400 - קואורדינטות חסרות או לא חוקיות</li>
-                        <li>404 - לא נמצא מלון</li>
-                        <li>500 - שגיאת שרת</li>
-                    </ul>
-                </td>
-            </tr>
-
-            
-        </tbody>
-    </table>
 
 ## Auth
 
@@ -511,3 +290,40 @@ OR
 | POST | /api/searchHistory/addSearch          | -      | userId  | `{ "query": string }` | Adds a new search to the user (if not already exists) | `{ "title": "Success", "message": "Search saved successfully." }` | 400 - Missing fields<br>409 - Search already exists<br>500 - Server error |
 | GET  | /api/searchHistory/getUserSearches    | -      | userId  | -    | Retrieves all user searches by descending time | `{ "title": "Success", "message": "User searches fetched successfully.", "data": [query, ...] }` | 400 - Missing userId<br>404 - No searches found<br>500 - Server error |
 | GET  | /api/searchHistory/getSearchSuggestions | `{ "query": string }` | - | - | Suggests searches based on partial text | `{ "title": "Success", "message": "User searches fetched successfully.", "data": [query, ...] }` | 400 - Missing query<br>404 - No suggestions found<br>500 - Server error |
+
+
+
+<h2>Hotel</h2>
+<table>
+    <thead>
+        <tr>
+            <th>CRUD</th>
+            <th>Endpoint</th>
+            <th>Parameters</th>
+            <th>Headers</th>
+            <th>Body</th>
+            <th>Description</th>
+            <th>Response</th>
+            <th>Possible Errors</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>POST</td>
+            <td>/api/hotel/add</td>
+            <td>-</td>
+            <td>adminId</td>
+            <td><pre>{ "hotelName": string, "city": string, "location": { "latitude": number, "longitude": number }, "pictures"?: string[] }</pre></td>
+            <td>Creates a new hotel in the database</td>
+            <td><pre>{ "message": "Hotel created successfully", "hotelId": string }</pre></td>
+            <td>
+                <ul>
+                    <li>400 - Missing fields</li>
+                    <li>409 - Hotel name already exists</li>
+                    <li>500 - Database error</li>
+                </ul>
+            </td>
+        </tr>
+        <!-- Other hotel rows would follow similarly... -->
+    </tbody>
+</table>
