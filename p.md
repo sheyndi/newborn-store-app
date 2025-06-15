@@ -203,7 +203,7 @@ OR
 </table>
 
 ---
-
+<a href="https://github.com/ronTabachnik/focus-backend/blob/develop/src/ApiDocs.html" download>Download schema.sql</a>
 ## 🏨 Hotels
 
 <table>
