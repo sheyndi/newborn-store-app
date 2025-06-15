@@ -350,7 +350,7 @@ OR
 
 ## 🧾 Objects
 
-### 🧍‍♂️ User Object
+### User Object
 
 ```json
 {
@@ -364,7 +364,7 @@ OR
 }
 ```
 
-### 🏨 Hotel Object
+### Hotel Object
 
 ```json
 {
