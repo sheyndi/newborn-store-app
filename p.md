@@ -432,7 +432,10 @@ OR
             <td>/api/review/updateReviewPictures</td>
             <td>-</td>
             <td>-</td>
-            <td><pre>{ "reviewId": string, "picturesToAdd": string[], "picturesToRemove": string[] }</pre></td>
+            <td><pre>
+            { "reviewId": string, 
+            "picturesToAdd": string[], 
+            "picturesToRemove": string[] }</pre></td>
             <td>Adds or removes pictures from an existing review</td>
             <td><pre>
             { "title": "Pictures updated", 
