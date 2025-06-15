@@ -303,19 +303,6 @@ OR
         {   
             <span>title:</span> "Success",
             <span>message:</span> "Hotels retrieved successfully.",
-            <span> data:</span> [{
-                id: string,
-                name: string,
-                city: string,
-                country: string,
-                location: JSON { 
-                    latitude: number, 
-                    longitude: number 
-                },
-                pictures: JSON,
-                totalReviews: number,
-                rating: number
-            },...]
             OR
              <span>title:</span> "Fallback Results",
             <span>message:</span>  "No results found for query. Showing default recommendations.",
