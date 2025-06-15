@@ -82,6 +82,120 @@ src/
 
 ### 👤 Users
 
+<table>
+    <thead>
+        <tr>
+            <th>CRUD</th>
+            <th>כתובת</th>
+            <th>פרמטרים</th>
+            <th>Headers</th>
+            <th>Body</th>
+            <th>מה עושה</th>
+            <th>מה מוחזר</th>
+            <th>שגיאות אפשריות</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>GET</td>
+            <td>/api/user/getUserDetails</td>
+            <td>-</td>
+            <td>userId: string</td>
+            <td>-</td>
+            <td>Get user details by ID</td>
+            <td>
+<pre>
+{ 
+  title: "Success",
+  message: "User details fetched successfully.",
+  data: <a href="#user-object">user</a>
+}
+</pre>
+            </td>
+            <td>
+                400, 404, 500
+            </td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td>/api/user/addOrUpdateUser</td>
+            <td>-</td>
+            <td>userId: string</td>
+            <td>
+<pre>
+{ 
+  first_name: string,
+  last_name: string,
+  phone?: string,
+  address?: string,
+  profile_picture?: string
+}
+</pre>
+            </td>
+            <td>Add or update user by ID</td>
+            <td>
+<pre>
+1. { message: "User added successfully", userId: string }
+OR
+2. { message: "User updated successfully" }
+</pre>
+            </td>
+            <td>
+                    400, 400, 500
+            </td>
+        </tr>
+        <tr>
+            <td>PATCH</td>
+            <td>/api/user/favorites/</td>
+            <td>-</td>
+            <td>userId: string</td>
+            <td>
+<pre>
+{
+  hotelId: string,
+  action: "add" | "remove"
+}
+</pre>
+            </td>
+<td>Update favorite hotels list</td>
+            <td>
+<pre>
+{
+  title: "Success",
+  message: "Loved hotels updated successfully.",
+  hotelId: string,
+  action: "add" | "remove",
+  updatedList: [string],
+  userId: string
+}
+</pre>
+            </td>
+            <td>
+                    400, 404, 500
+            </td>
+        </tr>
+        <tr>
+            <td>DELETE</td>
+            <td>/api/user/:userId</td>
+            <td>userId: string</td>
+            <td>userId: string</td>
+            <td>-</td>
+            <td>Delete user by ID</td>
+            <td>
+<pre>
+{
+  title: "Success",
+  message: "User deleted successfully."
+}
+</pre>
+            </td>
+            <td>
+                400, 404, 430, 500
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 | Method | Endpoint                   | Params | Headers        | Body | Description                             | Response | Errors |
 |--------|----------------------------|--------|----------------|------|-----------------------------------------|----------|--------|
 | GET    | `/api/user/getUserDetails` | –      | `userId`       | –    | Get user details by ID                  | `{ message, data: user }` | 400, 404, 500 |
@@ -147,11 +261,11 @@ src/
   "city": "string",
   "country": "string",
   "location": {
-    "latitude": number,
-    "longitude": number
+    "latitude": "number",
+    "longitude": "number"
   },
   "pictures": ["string"],
-  "totalReviews": number,
-  "averageRating": number
+  "totalReviews": "number",
+  "averageRating": "number"
 }
 ```
