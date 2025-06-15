@@ -82,6 +82,8 @@ src/
 
 ### 👤 Users
 
+---
+### 🔍 Search History
 <table>
     <thead>
         <tr>
@@ -330,6 +332,8 @@ OR
 ---
 
 
+---
+### 💬 Comments
 <table>
     <thead>
         <tr>
@@ -394,6 +398,8 @@ OR
 ---
 
 
+---
+### 📝 Reviews
 <table>
     <thead>
         <tr>
@@ -513,6 +519,8 @@ OR
 </table>
 ---
 
+---
+### 💬 Comments
 <table>
     <thead>
         <tr>
@@ -561,6 +569,8 @@ OR
 </table>
 ---
 
+---
+### 🚩 Reports
 <table>
     <thead>
         <tr>
@@ -597,6 +607,8 @@ OR
 </table>
 ---
 
+---
+### 📊 Admin Statistics
 <table>
     <thead>
         <tr>
@@ -636,6 +648,7 @@ OR
 </table>
  ---
 
+### 🔑 Authentication
  <table>
     <thead>
         <tr>
@@ -665,7 +678,6 @@ OR
             </td>
             <td>400, 500</td>
         </tr>
-
         <tr>
             <td>POST</td>
             <td>/api/auth/verifyOTP/</td>
@@ -690,6 +702,8 @@ OR
 </table>
 
 ---
+
+### 📢 System Messages
  <table>
     <thead>
         <tr>
