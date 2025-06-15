@@ -60,53 +60,8 @@ src/
 └── index.ts        # נקודת כניסה
 ```
 
----
-
-## 📡 REST API
-
-### 👤 משתמשים
-
-| CRUD     | כתובת                  | מתודה | פרמטרים | Headers | Body | תיאור |
-|----------|------------------------|--------|----------|---------|------|--------|
-| יצירה    | `/api/users/register`  | POST   |          |         | `{ name, email, password }` | הרשמת משתמש |
-| התחברות | `/api/users/login`     | POST   |          |         | `{ email, password }` | התחברות עם טוקן |
-| שליפה   | `/api/users/profile`   | GET    |          | `Authorization: Bearer <token>` | - | פרטי משתמש מחובר |
-
----
-
-### 🏨 מלונות
-
-| CRUD     | כתובת              | מתודה | פרמטרים | Headers | Body | תיאור |
-|----------|--------------------|--------|----------|---------|------|--------|
-| שליפה    | `/api/hotels`      | GET    |          |         |      | כל המלונות |
-| לפי ID   | `/api/hotels/:id`  | GET    | `id`     |         |      | מלון מסוים |
-| חיפוש    | `/api/hotels/search` | GET  | Query Params | |      | חיפוש לפי פילטרים |
-
----
-
-### 📝 ביקורות
-
-| CRUD     | כתובת                      | מתודה | פרמטרים | Headers | Body | תיאור |
-|----------|----------------------------|--------|----------|---------|------|--------|
-| יצירה    | `/api/reviews/`            | POST   |          | `Authorization` | `{ hotelId, rating, comment }` | הוספת ביקורת |
-| לפי מלון | `/api/reviews/hotel/:id`   | GET    | `id`     |         |      | כל הביקורות של מלון |
-
----
-
-### ❤️ מלונות אהובים
-
-| CRUD     | כתובת                          | מתודה | פרמטרים | Headers | Body | תיאור |
-|----------|--------------------------------|--------|----------|---------|------|--------|
-| עדכון    | `/api/users/updateLovedHotels` | PATCH  |          | `Authorization` | `{ hotelId }` | הוספה/הסרה של מלון אהוב |
-
----
 
 ### 📢 הודעות מערכת
-
-| CRUD     | כתובת                      | מתודה | פרמטרים | Headers | Body | תיאור |
-|----------|----------------------------|--------|----------|---------|------|--------|
-| שליפה    | `/api/systemMessages`      | GET    |          |         |      | כל ההודעות הפעילות |
-| יצירה    | `/api/systemMessages`      | POST   |          |         | `{ title, content, expires_at }` | יצירת הודעה חדשה |
 
 ---
 
@@ -126,8 +81,9 @@ src/
   - curl
 
 ---
+## 📡 REST API
 
-## 👤 קריאות API - משתמש
+### 👤 משתמשים
 
 <table>
     <thead>
@@ -293,7 +249,7 @@ OR
 
 
 
-<h2>Hotel</h2>
+### 🏨 מלונות
 <table>
     <thead>
         <tr>
@@ -324,6 +280,169 @@ OR
                 </ul>
             </td>
         </tr>
-        <!-- Other hotel rows would follow similarly... -->
+          <tr>
+                <td>GET</td>
+                <td>/api/hotel/getHotelsBySearch</td>
+                <td>            
+        {<br />
+            limit?: number,
+            page?: number,<br />
+            "query": string
+        }
+                </td>
+                <td>userId?</td>
+                <td>
+                    -
+                </td>
+                <td>מחפש מלונות לפי מחרוזת חיפוש חלקית. אם לא נמצאו תוצאות מתאימות אך קיים משתמש עם חיפושים קודמים,
+                    יוחזרו תוצאות מהחיפוש האחרון שלו. אם לא קיים משתמש או אין חיפושים קודמים – תוחזר רשימת מלונות ברירת
+                    מחדל.</td>
+                <td><pre>
+        {   
+            <span>title:</span> "Success",
+            <span>message:</span> "Hotels retrieved successfully.",
+            <span> data:</span> [{
+                id: string,
+                name: string,
+                city: string,
+                country: string,
+                location: JSON { 
+                    latitude: number, 
+                    longitude: number 
+                },
+                pictures: JSON,
+                totalReviews: number,
+                rating: number
+            },...]
+            OR
+             <span>title:</span> "Fallback Results",
+            <span>message:</span>  "No results found for query. Showing default recommendations.",
+            <span> data:</span> [{
+                id: string,
+                name: string,
+                city: string,
+                country: string,
+                location: JSON { 
+                    latitude: number, 
+                    longitude: number 
+                },
+                pictures: JSON,
+                totalReviews: number,
+                rating: number
+            },...]
+        }</pre>
+                </td>
+                <td>
+                    <ul>
+                        <li>400 - שדה query חסר</li>
+                        <li>404 - לא נמצאו תוצאות</li>
+                        <li>500 - שגיאת שרת</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/api/hotel/getFilteredHotelFeed</td>
+                <td>
+                    userLat: number, userLon: number,
+                    filtering: string ("Near_by" | "Popular" | "Best_Reviews"),
+                    limit?: number, page?: number
+                </td>
+                <td>-</td>
+                <td>-</td>
+                <td>מחזיר מלונות לפי פילטר נבחר</td>
+                <td>
+                    <pre>
+    {
+        <span>title:</span> "Success",
+        <span>message:</span> "Hotels retrieved successfully.",
+        <span>data:</span> [{
+            id: string,
+            name: string,
+            city: string,
+            country: string,
+            location:  { 
+                latitude: number, 
+                longitude: number },
+            reviews: [ string ],
+            totalReviews: number,
+            rating: number
+        },...]
+    }</pre>
+                </td>
+                <td>
+                    <ul>
+                        <li>400 - פרמטרים חסרים או לא חוקיים</li>
+                        <li>404 - לא נמצאו מלונות</li>
+                        <li>500 - שגיאת שרת</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/api/hotel/sorted-by-distance</td>
+                <td>userLat: number, userLon: number,
+                    limit?: number, page?: number</td>
+                <td>-</td>
+                <td>-</td>
+                <td>מחזיר את כל המלונות ממוינות לפי קרבה למיקום המשתמש</td>
+                <td>
+                    <pre>
+    {
+        <span>title:</span> "Success",
+        <span>message:</span> "Hotels retrieved successfully.",
+        <span>data:</span> [{
+            id: string,
+            name: string,
+            city: string,
+            country: string,
+            location:  { 
+                latitude: number, 
+                longitude: number },
+            reviews: [ string ],
+            totalReviews: number,
+            averageRating: number
+        },...]
+    }</pre>
+                <td>
+                    <ul>
+                        <li>400 - פרמטרים חסרים או לא חוקיים</li>
+                        <li>404 - לא נמצאו מלונות</li>
+                        <li>500 - שגיאת שרת</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>GET</td>
+                <td>/api/hotel/navigateToHotel</td>
+                <td>userLat: number, userLon: number</td>
+                <td>-</td>
+                <td>-</td>
+                <td>מחזיר מלון אחד הכי קרוב למשתמש</td>
+                <td><pre>
+        <span>title:</span>"Hotel Found",
+        <span>message:</span> "Hotel found successfully.",
+        <span>data:</span>
+        {
+            id: string,
+            name: string,
+            city: string,
+            country: string,
+            location:  { 
+                latitude: number, 
+                longitude: number },
+            reviews: [ string ],
+            totalReviews: number,
+            averageRating: number
+        }
+                        </pre></td>
+                <td>
+                    <ul>
+                        <li>400 - קואורדינטות חסרות או לא חוקיות</li>
+                        <li>404 - לא נמצא מלון</li>
+                        <li>500 - שגיאת שרת</li>
+                    </ul>
+                </td>
+            </tr>
     </tbody>
 </table>
