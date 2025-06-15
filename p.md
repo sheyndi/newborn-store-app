@@ -16,31 +16,41 @@
 
 ---
 
-## ⚙️ Installation & Running
+## ⚙️ Getting Started – Backend Server
+
+1. **Clone the repository:**
 
 ```bash
-# Install dependencies
+git clone https://github.com/ronTabachnik/focus-backend.git
+cd focus-backend
+```
+2. **Install dependencies:**
+
+```bash
 npm install
-
-# Create environment file
-cp .env.example .env
 ```
 
-### `.env` Example:
+3. **Set up the environment file:**
 
 ```
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=focus_db
+DB_HOST = "localhost"
+DB_PASSWORD = "your_password"
+DB_USER = "your_user_name"
+DB_NAME = "focus"
 
-PORT=5000
-JWT_SECRET=your_jwt_secret
+PORT = "8000"
+RESEND_API_KEY = "key_test_1234567890abcdef1234567890abcdef"
 ```
+4. **Create the MySQL database:**
+Make sure MySQL is running, then run the following in terminal:
+```bash
+mysql -u your_user_name -p < db/schema.sql
+```
+Or manually inside MySQL CLI:
+
+5. **Run the application:**
 
 ```bash
-# Run development server
 npm run dev
 ```
 
@@ -56,18 +66,9 @@ src/
 ├── middleware/     # Authorization, error handling
 ├── config/         # DB connection
 ├── types/          # TypeScript types
-└── index.ts        # Entry point
+└── server.ts        # Entry point
 ```
 
----
-
-## 🔒 Authorization
-
-- Some endpoints require a JWT token.
-- Add this header:  
-  `Authorization: Bearer <your_token>`
-
----
 
 ## 🧪 Testing
 
@@ -81,9 +82,6 @@ src/
 ## 📡 REST API Documentation
 
 ### 👤 Users
-
----
-### 🔍 Search History
 <table>
     <thead>
         <tr>
@@ -331,8 +329,6 @@ OR
 
 ---
 
-
----
 ### 💬 Comments
 <table>
     <thead>
@@ -803,7 +799,6 @@ expiresAt: date
 
 ### Review Object
 
-```json
 {
   "id": "string",
   "hotelId": "string",
@@ -813,7 +808,6 @@ expiresAt: date
   "timestamp": "Date",
   "pictures": "string"[]
 }
-```
 
 
 ### Comment Object
