@@ -652,6 +652,60 @@ OR
     <tbody>
         <tr>
             <td>GET</td>
+            <td>/api/auth/getOTP/:email</td>
+            <td>email: string</td>
+            <td>-</td>
+            <td>-</td>
+            <td>Sends a one-time password to the user's email</td>
+            <td>
+<pre>{
+    "title": "OTP Sent",
+    "message": "A one-time password has been sent to your email address."
+}</pre>
+            </td>
+            <td>400, 500</td>
+        </tr>
+
+        <tr>
+            <td>POST</td>
+            <td>/api/auth/verifyOTP/</td>
+            <td>-</td>
+            <td>-</td>
+            <td>
+<pre>{
+    "email": "string",
+    "otp": "string"
+}</pre>
+            </td>
+            <td>Verifies the submitted one-time password</td>
+            <td>
+<pre>{
+    "title": "OTP Verified",
+    "message": "Verification successful. You may continue."
+}</pre>
+            </td>
+            <td>400, 404, 401, 410, 500</td>
+        </tr>
+    </tbody>
+</table>
+
+---
+ <table>
+    <thead>
+        <tr>
+            <th>CRUD</th>
+            <th>Endpoint</th>
+            <th>Parameters</th>
+            <th>Headers</th>
+            <th>Body</th>
+            <th>Description</th>
+            <th>Response</th>
+            <th>Possible Errors</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>GET</td>
             <td>/api/systemMessages/activeitiMassege</td>
             <td>-</td>
             <td>userId</td>
