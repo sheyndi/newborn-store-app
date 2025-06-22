@@ -4,7 +4,7 @@ import GIFTS from "../models/giftModel.js";
 export const getAllGifts = async (req, res) => {
     let limit = req.query.limit || 20;
     let page = req.query.page || 1;
-    let { category } = req.query;
+    let { category } = req.params;
     let data = await GIFTS.find(category == "all" ? {} : { category: category }).skip((page - 1) * limit).limit(limit);
     try {
         if (!data)
