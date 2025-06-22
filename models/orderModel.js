@@ -24,7 +24,6 @@ const orderSchema = Schema({
         }
     },
     address_target: { city: { type: String, required: true }, street: { type: String, required: true }, street_number: { type: Number, required: true }, apartment_number: { type: Number } },
-    is_received: { type: Boolean, default: false },
     price_sending: { type: Number, default: 0 },
     Greeting: { text: String, background_page: { type: String, enum: [1, 2, 3, 4, 5] } },
 })

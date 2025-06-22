@@ -4,7 +4,8 @@ import GIFTS from "../models/giftModel.js";
 export const getAllGifts = async (req, res) => {
     let limit = req.query.limit || 20;
     let page = req.query.page || 1;
-    let data = await GIFTS.find().skip((page - 1) * limit).limit(limit);
+    let { category } = req.query;
+    let data = await GIFTS.find(category == "all" ? {} : { category: category }).skip((page - 1) * limit).limit(limit);
     try {
         if (!data)
             return res.status(404).json({ title: "cannot get all", message: "not found gifts" });
@@ -94,9 +95,9 @@ export const getAllGiftOutOfStock = async (req, res) => {
 }
 
 //קבלת כמות העמודים
-export async function getTotalGiftPages(req, res){
+export async function getTotalGiftPages(req, res) {
     let limit = req.query.limit || 20;
-    try{
+    try {
         let data = await GIFTS.countDocuments();
         res.json({
             totalCount: data,
@@ -104,9 +105,9 @@ export async function getTotalGiftPages(req, res){
             limit: limit
         }
         );
-        }
-        catch(err){
-            res.status(400).json({title:"שגיאה בהבאת כמות העמודים", message:err.message});
+    }
+    catch (err) {
+        res.status(400).json({ title: "שגיאה בהבאת כמות העמודים", message: err.message });
     }
 }
 

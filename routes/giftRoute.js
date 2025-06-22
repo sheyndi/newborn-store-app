@@ -4,7 +4,7 @@ import { checkManeger } from "../middleware/check.js"
 
 const giftRoute = Router()
 
-giftRoute.get("", getAllGifts)
+giftRoute.get("/:category", getAllGifts)
 
 giftRoute.get("/numPages", getTotalGiftPages)
 
