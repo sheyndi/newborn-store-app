@@ -96,6 +96,7 @@ export const getAllGiftOutOfStock = async (req, res) => {
 
 //קבלת כמות העמודים
 export async function getTotalGiftPages(req, res) {
+    console.log("IN getTotalGiftPages")
     let limit = req.query.limit || 20;
     try {
         let data = await GIFTS.countDocuments();

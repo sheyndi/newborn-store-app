@@ -4,9 +4,9 @@ import { checkManeger } from "../middleware/check.js"
 
 const giftRoute = Router()
 
-giftRoute.get("/:category", getAllGifts)
-
 giftRoute.get("/numPages", getTotalGiftPages)
+
+giftRoute.get("/:category", getAllGifts)
 
 giftRoute.get("/get_out_of_stock", checkManeger, getAllGiftOutOfStock)
 
