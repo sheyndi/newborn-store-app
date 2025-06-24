@@ -5,7 +5,7 @@ export const getAllGifts = async (req, res) => {
     let limit = req.query.limit || 20;
     let page = req.query.page || 1;
     let { category } = req.params;
-    let data = await GIFTS.find(category && { category: category }).skip((page - 1) * limit).limit(limit);
+    let data = await GIFTS.find(category ? { category: category } : {}).skip((page - 1) * limit).limit(limit);
     try {
         if (!data)
             return res.status(404).json({ title: "cannot get all", message: "not found gifts" });
@@ -99,7 +99,7 @@ export async function getTotalGiftPages(req, res) {
     let { category } = req.params;
     let limit = req.query.limit || 20;
     try {
-        let data = await GIFTS.countDocuments(category && { category: category });
+        let data = await GIFTS.countDocuments(category ? { category: category } : {});
         res.json({
             totalCount: data,
             totalPages: Math.ceil(data / limit),
