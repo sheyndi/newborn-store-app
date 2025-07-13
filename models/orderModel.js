@@ -16,13 +16,6 @@ const orderSchema = Schema({
     id_user: { type: Schema.Types.ObjectId, ref: USERS, required: true },
     products: { type: [minimalGIFTSchema], required: true },
     is_sending: { type: Boolean, default: false },
-    target_date: {
-        type: Date, default: () => {
-            const today = new Date();
-            today.setDate(today.getDate() + 5);
-            return today;
-        }
-    },
     address_target: { city: { type: String, required: true }, street: { type: String, required: true }, street_number: { type: Number, required: true }, apartment_number: { type: Number } },
     price_sending: { type: Number, default: 0 },
     Greeting: { text: String, background_page: { type: String, enum: [1, 2, 3, 4, 5] } },

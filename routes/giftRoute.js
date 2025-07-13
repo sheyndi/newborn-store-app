@@ -1,6 +1,7 @@
 import { Router } from "express"
 import { addGift, deleteGiftById, getAllGiftOutOfStock, getAllGifts, getGiftById, updateGift, getTotalGiftPages } from "../controllers/giftController.js"
 import { checkManeger } from "../middleware/check.js"
+import upload from "../middleware/upload.js"
 
 const giftRoute = Router()
 
@@ -14,7 +15,7 @@ giftRoute.get("/:id", getGiftById)
 
 giftRoute.delete("/:id", checkManeger, deleteGiftById)
 
-giftRoute.post("", checkManeger, addGift)
+giftRoute.post("", checkManeger, upload.single('image'), addGift)
 
 giftRoute.put("/:id", checkManeger, updateGift)
 
