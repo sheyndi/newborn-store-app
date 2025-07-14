@@ -1,12 +1,12 @@
 import multer from 'multer';
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) =>{
-        cb(null, './public/images/products');
+    destination: (req, file, cb) => {
+        cb(null, './public/products');
     },
-
-    filename: (req, file, cb) =>{
-        cb(null, Date.now().toString() + '.' + file.originalname.split('.').pop());
+    filename: (req, file, cb) => {
+        const imgName = Date.now().toString() + '.' + file.originalname.split('.').pop();
+        cb(null, imgName);
     }
 });
 

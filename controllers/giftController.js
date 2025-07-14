@@ -56,6 +56,7 @@ export const addGift = async (req, res) => {
     if (body.quantity_in_stock < 1)
         return res.status(400).json({ title: "quantity_in_stock not good", message: "quantity_in_stock need be bigger then 0" });
     //הוספת המוצר
+    body.image_url = "https://baby-store-node-backend.onrender.com/api/images/" + req.file.filename;
     let newGift = new GIFTS(req.body);
     let data = await newGift.save();
     try {

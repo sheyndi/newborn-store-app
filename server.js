@@ -15,6 +15,7 @@ connectToDB();
 app.use(cors());
 
 app.use(express.json());
+app.use("/api/images", express.static("public/products"));
 app.use("/api/user", userRouter);
 app.use("/api/gift", giftRouter);
 app.use("/api/order", orderRouter);

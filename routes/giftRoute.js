@@ -15,7 +15,7 @@ giftRoute.get("/:id", getGiftById)
 
 giftRoute.delete("/:id", checkManeger, deleteGiftById)
 
-giftRoute.post("", checkManeger, upload.single('image'), addGift)
+giftRoute.post("", upload.single('image'), addGift)
 
 giftRoute.put("/:id", checkManeger, updateGift)
 
