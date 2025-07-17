@@ -52,14 +52,9 @@ export const addUserSignUp = async (req, res) => {
     try {
         if (is_user)
             return res.status(400).json({ title: "cannot add user", message: "email is exist" })
-    }
-    catch (err) {
-        return res.status(400).json({ title: "error in check the user", message: err.message })
-    }
     //הוספת המשתמש החדש
     let newUser = new Users(req.body);
     let data = await newUser.save();
-    try {
         data.password = undefined;
         data.token = generateToken(data);
         res.json(data);
