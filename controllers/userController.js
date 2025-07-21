@@ -54,7 +54,7 @@ export const addUserSignUp = async (req, res) => {
             return res.status(400).json({ title: "cannot add user", message: "email is exist" })
     //הוספת המשתמש החדש
     let newUser = new Users(req.body);
-    let data = await newUser.save();
+    let data = await newUser.save().lean();
         data.password = undefined;
         data.token = generateToken(data);
         res.json(data);
