@@ -5,14 +5,13 @@ dotenv.config();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendResetPasswordEmail(email, resetLink) {
-  try {
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: email,
-      subject: 'Password Reset',
-      html: `<p>לחצו <a href="${resetLink}">כאן</a> לאיפוס הסיסמה שלכם.</p>`,
-    });
-  } catch (err) {
+  const response = await resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: email,
+    subject: 'Password Reset',
+    html: `<p>לחצו <a href="${resetLink}">כאן</a> לאיפוס הסיסמה שלכם.</p>`,
+  });
+  if (response.error) {
     throw new Error(`Failed to send email: ${err.message}`);
   }
 }
@@ -54,14 +53,15 @@ export const sendOrderConfirmationEmail = async (userEmail, userName, orderId, i
   </div>
   `;
 
-  try {
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: "sh0534110774@gmail.com",
-      subject: 'אישור הזמנה - תודה שקנית אצלנו!',
-      html,
-    });
-  } catch (err) {
-    throw new Error(`Failed to send email: ${err.message}`);
+  const response = await resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: "sh0534110774@gmail.com",
+    subject: 'אישור הזמנה - תודה שקנית אצלנו!',
+    html,
+  });
+
+  if (response.error) {
+    console.error("Resend API Error:", response.error);
+    throw new Error(response.error.message || "Unknown error from resend");
   }
 };
