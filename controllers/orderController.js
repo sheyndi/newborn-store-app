@@ -2,6 +2,7 @@ import ORDERS from "../models/orderModel.js";
 import USERS from "../models/userModel.js";
 import GIFTS from "../models/giftModel.js";
 import orderModel from "../models/orderModel.js";
+import { sendOrderConfirmationEmail } from "../Utils/mailService.js";
 
 //קבלת כל ההזמנות
 export const getAllOrders = async (req, res) => {
@@ -87,7 +88,7 @@ export const addOrder = async (req, res) => {
 
         let newOrder = new ORDERS(body)
         let data = await newOrder.save();
-
+        sendOrderConfirmationEmail(user.email, user.userName, data._id, body.products, data.price_sending + data.price_products);
         res.json(data);
     }
     catch (err) {

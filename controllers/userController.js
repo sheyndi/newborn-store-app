@@ -1,4 +1,5 @@
 
+import { sendResetPasswordEmail } from "../Utils/mailService.js";
 import { generateToken } from "../Utils/generateToken.js";
 import Users from "../models/userModel.js";
 
@@ -150,3 +151,21 @@ export async function getTotalUserPages(req, res) {
     }
 }
 
+export const sendResetPassword = async (req, res) => {
+    const { email } = req.body;
+    if (!email) {
+        return res.status(400).json({ title: "Missing email", message: "Email is required" });
+    }
+    try {
+        const user = await Users.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ title: "User not found", message: "No user found with this email" });
+        }
+        const token = generateToken(user);
+        const resetLink = `http://localhost:5173/reset_password/${token}`;
+        await sendResetPasswordEmail(email, resetLink);
+        res.json({ message: "Reset password email sent successfully" });
+    } catch (error) {
+        res.status(500).json({ title: "Error sending email", message: error.message });
+    }
+}
