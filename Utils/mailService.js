@@ -56,8 +56,8 @@ export const sendOrderConfirmationEmail = async (userEmail, userName, orderId, i
 
   try {
     await resend.emails.send({
-      from: 'orders@yourdomain.com',
-      to: userEmail,
+      from: 'onboarding@resend.dev',
+      to: "sh0534110774@gmail.com",
       subject: 'אישור הזמנה - תודה שקנית אצלנו!',
       html,
     });
