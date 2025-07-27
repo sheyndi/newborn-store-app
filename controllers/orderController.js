@@ -60,7 +60,7 @@ export const deleteOrder = async (req, res) => {
 
 //הוספת הזמנה
 export const addOrder = async (req, res) => {
-    console.log("API Key Loaded?", !!process.env.RESEND_API_KEY);
+    console.log("API Key Loaded?");
 
     let body = req.body;
     if (!body.id_user || !body.products)
