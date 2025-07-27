@@ -60,6 +60,8 @@ export const deleteOrder = async (req, res) => {
 
 //הוספת הזמנה
 export const addOrder = async (req, res) => {
+    console.log("API Key Loaded?", !!process.env.RESEND_API_KEY);
+
     let body = req.body;
     if (!body.id_user || !body.products)
         return res.status(400).json({ title: "missing parameters", message: "Not all required parameters were received" })
