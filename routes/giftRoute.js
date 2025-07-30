@@ -15,9 +15,9 @@ giftRoute.get("/:id", getGiftById)
 
 giftRoute.delete("/:id", checkManeger, deleteGiftById)
 
-giftRoute.post("", upload.single('image'), addGift)
+giftRoute.post("", upload.single('image'),checkManeger,  addGift)
 
-giftRoute.put("/:id", checkManeger, updateGift)
+giftRoute.put("/:id", upload.single('image'), checkManeger, updateGift)
 
 export default giftRoute;
 

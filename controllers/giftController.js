@@ -47,7 +47,7 @@ export const addGift = async (req, res) => {
     let body = req.body;
     //בדיקות תקינות:
     //required האם נשלחו כל המאפיינים שהם 
-    if (!body.name || !body.price || !body.quantity_in_stock)
+    if (!body.name || !body.price || !body.quantity_in_stock || !body.category || !req.file)
         return res.status(400).json({ title: "missing parameters", message: "not all necessary parameters were sent" });
     //האם המחיר של המוצר תקין
     if (body.price < 1)
@@ -71,6 +71,9 @@ export const addGift = async (req, res) => {
 export const updateGift = async (req, res) => {
     let { id } = req.params;
     let body = req.body;
+    if(req.file) {
+        body.image_url = "https://baby-store-node-backend.onrender.com/api/images/" + req.file.filename;
+    }
     let data = await GIFTS.findByIdAndUpdate(id, body, { new: true });
     try {
         if (!data)
