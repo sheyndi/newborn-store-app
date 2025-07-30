@@ -12,6 +12,7 @@ export async function sendResetPasswordEmail(email, resetLink) {
     html: `<p>לחצו <a href="${resetLink}">כאן</a> לאיפוס הסיסמה שלכם.</p>`,
   });
   if (response.error) {
+    console.log(response.error);
     throw new Error(`Failed to send email: ${response.error}`);
   }
 }
