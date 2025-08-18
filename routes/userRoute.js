@@ -14,7 +14,7 @@ userRoute.get("/:id", getUserByID)
 
 userRoute.post("", addUserSignUp)
 
-userRoute.put("/update_password/:id", checkUser, updatePassword)
+userRoute.put("/reset-password/:id", checkUser, updatePassword)
 
 userRoute.put("/:id", checkUser, updateUser)
 
