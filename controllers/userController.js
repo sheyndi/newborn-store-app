@@ -91,7 +91,7 @@ export const updateUser = async (req, res) => {
 
 //עדכון סיסמה
 export const updatePassword = async (req, res) => {
-    let { id } = req.params;
+    let { id } = req.user;
     let body = req.body
     //אם לא התקבל סיסמה
     if (!body.password)
