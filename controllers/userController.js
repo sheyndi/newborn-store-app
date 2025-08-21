@@ -91,8 +91,8 @@ export const updateUser = async (req, res) => {
 
 //עדכון סיסמה
 export const updatePassword = async (req, res) => {
-    let { id } = req.user;
-    let body = req.body
+    let { userId } = req.user;
+    let body = req.body;
     //אם לא התקבל סיסמה
     if (!body.password)
         return res.status(404).json({ title: "missing password", message: "not send password" });
@@ -101,7 +101,7 @@ export const updatePassword = async (req, res) => {
     if (body.password && !passwordRegex.test(body.password))
         return res.status(404).json({ title: "Password not strong", message: "Password should consist of upper and lower case symbols and at least 8 characters" });
 
-    let data = await Users.findByIdAndUpdate(id, body, { new: true });
+    let data = await Users.findByIdAndUpdate(userId, body, { new: true });
     try {
         if (!data)
             return res.status(404).json({ title: "error cannot get byId to update", message: "id not defind" });

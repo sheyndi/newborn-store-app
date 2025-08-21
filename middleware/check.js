@@ -10,7 +10,7 @@ export function checkUser(req, res, next) {
         next()
     }
     catch (err) {
-        return res.status(401).json({ title: "ראשית בצע כניסה", message: "unauthorized" + err.message })
+        return res.status(502).json({ title: "ראשית בצע כניסה", message: "unauthorized" + err.message })
     }
 }
 
