@@ -1,7 +1,7 @@
-
 import { sendResetPasswordEmail } from "../Utils/mailService.js";
 import { generateToken } from "../Utils/generateToken.js";
 import Users from "../models/userModel.js";
+import bcrypt from "bcrypt";
 
 //קבלת כל המשתמשים
 export const getAllUsers = async (req, res) => {
@@ -48,11 +48,12 @@ export const addUserSignUp = async (req, res) => {
     const pasRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;;
     if (body.password && !pasRegex.test(body.password))
         return res.status(404).json({ title: "Password not strong", message: "Password should consist of upper and lower case symbols and at least 8 characters" });
-    //בדיקה אם המשתמש קיים 
-    let is_user = await Users.findOne({ email: body.email })
     try {
+        //בדיקה אם המשתמש קיים 
+        let is_user = await Users.findOne({ email: body.email })
         if (is_user)
             return res.status(400).json({ title: "cannot add user", message: "email is exist" })
+        body.password = await bcrypt.hash(body.password, 10);
         //הוספת המשתמש החדש
         let newUser = new Users(req.body);
         let data = await newUser.save();
@@ -100,9 +101,9 @@ export const updatePassword = async (req, res) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;;
     if (body.password && !passwordRegex.test(body.password))
         return res.status(404).json({ title: "Password not strong", message: "Password should consist of upper and lower case symbols and at least 8 characters" });
-
-    let data = await Users.findByIdAndUpdate(userId, body, { new: true });
     try {
+        body.password = await bcrypt.hash(body.password, 10);
+        let data = await Users.findByIdAndUpdate(userId, body, { new: true });
         if (!data)
             return res.status(404).json({ title: "error cannot get byId to update", message: "id not defind" });
         data.password = undefined;
@@ -123,7 +124,8 @@ export const getUserByLogin = async (req, res) => {
         let data = await Users.findOne({ email: email }).lean();
         if (!data)
             return res.status(400).json({ title: "cannot get by login", message: "no user with such details" });
-        if (data.password != password)
+        const isMatch = await bcrypt.compare(password, data.password);
+        if (!isMatch)
             return res.status(400).json({ title: "cannot get by login", message: "password not good" });
         data.password = undefined;
         data.token = generateToken(data);
