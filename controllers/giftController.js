@@ -5,7 +5,7 @@ export const getAllGifts = async (req, res) => {
     let limit = req.query.limit || 20;
     let page = req.query.page || 1;
     let { category } = req.params;
-    let data = await GIFTS.find(category ? { category: category } : {}).skip((page - 1) * limit).limit(limit);
+    let data = await GIFTS.find(category == "כל המוצרים" ? {} : { category: category }).skip((page - 1) * limit).limit(limit);
     try {
         if (!data)
             return res.status(404).json({ title: "cannot get all", message: "not found gifts" });
@@ -71,7 +71,7 @@ export const addGift = async (req, res) => {
 export const updateGift = async (req, res) => {
     let { id } = req.params;
     let body = req.body;
-    if(req.file) {
+    if (req.file) {
         body.image_url = "https://baby-store-node-backend.onrender.com/api/images/" + req.file.filename;
     }
     let data = await GIFTS.findByIdAndUpdate(id, body, { new: true });
