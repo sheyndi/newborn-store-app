@@ -5,7 +5,7 @@ import upload from "../middleware/upload.js"
 
 const giftRoute = Router()
 
-giftRoute.get("/numPages/:category?", getTotalGiftPages)
+giftRoute.get("/numPages/:category", getTotalGiftPages)
 
 giftRoute.get("/all/:category", getAllGifts)
 

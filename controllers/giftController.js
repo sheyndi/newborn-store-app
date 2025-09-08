@@ -103,7 +103,7 @@ export async function getTotalGiftPages(req, res) {
     let { category } = req.params;
     let limit = req.query.limit || 20;
     try {
-        let data = await GIFTS.countDocuments(category ? { category: category } : {});
+        let data = await GIFTS.countDocuments(category == "כל המוצרים" ? {} : { category: category });
         res.json({
             totalCount: data,
             totalPages: Math.ceil(data / limit),
