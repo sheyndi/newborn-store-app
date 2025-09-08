@@ -117,6 +117,29 @@ export const updatePassword = async (req, res) => {
 //קבלת משתמש לפי שם משתמש וסיסמה
 export const getUserByLogin = async (req, res) => {
     const { email, password } = req.body;
+    let user = await Users.findOne({ email: email });
+    if (!user)
+        return res.status(400).json({ title: "cannot get by login", message: "no user with such details" });
+
+    let isMatch = false;
+
+    // Check if password is hashed (bcrypt hashes start with $2)
+    if (user.password && user.password.startsWith("$2")) {
+        isMatch = await bcrypt.compare(password, user.password);
+    } else {
+        // Plain text password check
+        isMatch = password === user.password;
+        if (isMatch) {
+            // Hash and update the password in DB
+            const hashedPassword = await bcrypt.hash(password, 10);
+            await Users.findByIdAndUpdate(user._id, { password: hashedPassword });
+            user.password = hashedPassword;
+        }
+    }
+
+    if (!isMatch)
+        return res.status(400).json({ title: "cannot get by login", message: "password not good" });
+    
     //אם לא התקבל סיסמא או מייל
     if (!email || !password)
         return res.status(400).json({ title: "error in get by login", message: "missing details" });

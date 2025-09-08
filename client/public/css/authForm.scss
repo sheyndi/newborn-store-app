@@ -1,0 +1,51 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f1f5f9;
+
+  form {
+    background: #fff;
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 320px;
+
+    .MuiFormControl-root {
+      width: 100%;
+    }
+
+    .error {
+      color: #d32f2f;
+      text-align: center;
+    }
+
+    button {
+      align-self: center;
+      background-color: #00bcd4;
+      color: white;
+
+      &:hover {
+        background-color: #0097a7;
+      }
+    }
+
+    .login-link{
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .forgot-password-link {
+      text-align: left;
+      width: 25ch;
+      margin: 0 1rem;
+      color: #1976d2;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+$primary-color: #1976d2;
+$secondary-color: #f5f5f5;
+$border-radius: 12px;
+
+.custom-card {
+  background-color: $secondary-color;
+  border-radius: $border-radius;
+  padding: 16px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  .custom-button {
+    background-color: $primary-color;
+    color: white;
+    margin-top: 12px;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+}
+
+

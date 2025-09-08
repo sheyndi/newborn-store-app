@@ -1,0 +1,61 @@
+.cart {
+  max-width: 1200px;
+  margin: 40px auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+  /* <--- כאן יוצרים רווח בין העמודה של המוצרים לסיכום */
+  direction: rtl;
+
+  .cart-products {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* רווח בין פריטי המוצרים עצמם */
+  }
+
+  .cart-summary {
+    flex: 1;
+    padding: 25px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: sticky;
+    top: 20px;
+  }
+
+  .clear-cart {
+    padding: 14px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    background-color: #ffc107;
+    color: black;
+
+    &:hover {
+      background-color: #ffa000;
+    }
+  }
+
+  .finish-order {
+    padding: 14px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    background-color: #00bcd4;
+    color: white;
+
+    &:hover {
+      background-color: #0097a7;
+    }
+  }
+}

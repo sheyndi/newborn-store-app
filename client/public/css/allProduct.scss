@@ -1,0 +1,62 @@
+.allProduct {
+    min-height: 100vh;
+    background-color:#FEFEFE;
+
+    /* עיצוב לקונטיינר המוצרים */
+    .productsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8rem 6.5rem;
+        list-style: none;
+        margin: 3rem 0 1rem 0;
+        padding: 3rem 12.5rem;
+    }
+
+    .productsContainer li {
+        transition: transform 0.3s ease;
+    }
+
+    .productsContainer li:hover {
+        transform: translateY(-5px);
+    }
+
+    /* התאמות נוספות */
+    .MuiPagination-root {
+        display: flex;
+        justify-content: center;
+        margin: 3rem 0 4rem;
+    }
+
+
+
+    /* התאמה לגוף הדף - הסר אם לא נחוץ */
+
+    body {
+        padding-top: 70px;
+    }
+}
+
+.loading {
+    width: 200px;
+    animation: pulseGlow 2s ease-in-out infinite;
+    position: fixed;
+    /* או absolute */
+    top: 40%;
+    left: 40%;;
+}
+@keyframes pulseGlow {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

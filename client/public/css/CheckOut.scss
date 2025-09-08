@@ -1,0 +1,164 @@
+.checkout-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f1f5f9;
+  padding: 1rem;
+
+  .success-message {
+    background: #fff;
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 320px;
+
+    h2 {
+      color: #4caf50;
+      margin: 1rem 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    p {
+      color: #666;
+      margin: 0 0 1rem 0;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    button {
+      background-color: #00bcd4;
+      color: white;
+
+      &:hover {
+        background-color: #0097a7;
+      }
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 0.5rem;
+
+      a {
+        color: #1976d2;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
+  form {
+    background: #fff;
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 320px;
+    margin: 0 auto;
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-family: inherit;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+      text-align: center;
+
+      &:focus {
+        border-color: #00bcd4;
+        outline: none;
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .gift-checkbox-label,
+    .greeting-file-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      color: #333;
+
+      input[type="checkbox"] {
+        width: auto;
+        margin: 0;
+        cursor: pointer;
+      }
+
+      input[type="file"] {
+        margin-left: 0.5rem;
+        cursor: pointer;
+      }
+    }
+
+    .error {
+      color: #d32f2f;
+      font-size: 0.875rem;
+      text-align: center;
+      margin: -1rem 0 0.5rem 0;
+    }
+
+    .checkout-summary {
+      margin: 0.25rem 0;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: center;
+      color: #333;
+
+      &.total-price {
+        color: #00bcd4;
+      }
+    }
+
+    .submit-btn {
+      background-color: #00bcd4;
+      color: white;
+      padding: 0.75rem 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0097a7;
+      }
+
+      &:disabled {
+        background-color: #80deea;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  /* Stepper related styling */
+  .MuiStepLabel-root.Mui-error {
+    color: #d32f2f !important;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .checkout-container form {
+    width: 100%;
+    max-width: 320px;
+    padding: 1.5rem 2rem;
+  }
+}

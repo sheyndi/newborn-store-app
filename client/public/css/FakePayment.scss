@@ -1,0 +1,94 @@
+.payment-container {
+  max-width: 480px;
+  margin: 40px auto;
+  font-family: sans-serif;
+  direction: rtl;
+}
+
+.summary {
+  background-color: #fff7e6;
+  border: 1px solid #ffcc80;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.fake-payment-form {
+  padding: 24px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+
+  .secure-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-weight: bold;
+    color: #4caf50;
+  }
+
+  input {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    font-size: 16px;
+  }
+
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+
+    &:hover {
+      background-color: #388e3c;
+    }
+
+    &:disabled {
+      background-color: #9e9e9e;
+      cursor: wait;
+    }
+  }
+
+  .loader {
+    margin: 12px auto;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4caf50;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    animation: spin 1s linear infinite;
+  }
+
+  p {
+    color: red;
+    font-size: 14px;
+    margin: -10px 0 10px;
+  }
+}
+
+.thanks-box {
+  background-color: #e8f5e9;
+  border: 1px solid #a5d6a7;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+
+  h2 {
+    color: #2e7d32;
+    margin-bottom: 12px;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
