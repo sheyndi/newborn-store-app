@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import logo from '../assets/logo.png';
-import '../../public/css/NavBar.scss';
+import '../../public/css/navBar.scss';
 
 const NavBar = () => {
     const user = useSelector(state => state.user.currentUser);

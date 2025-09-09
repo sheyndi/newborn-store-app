@@ -5,7 +5,7 @@ import { useState } from "react";
 import { productValidationRules } from "../validations/productValidation.js";
 import '../../public/css/updateProduct.scss';
 
-const UpdateProduct = ({ product, changePruductEdit , setProductsArr}) => {
+const UpdateProduct = ({ product, changePruductEdit , updateProductInList}) => {
     const STATUS = {
         IDLE: "idle",
         LOADING: "loading",
@@ -22,12 +22,7 @@ const UpdateProduct = ({ product, changePruductEdit , setProductsArr}) => {
             .then(res => {
                 setStatus(STATUS.SUCCESS);
                 console.log(res.data);
-                setProductsArr(prev => {
-                    const newArr = [...prev];
-                    const index = newArr.findIndex(p => p._id === data._id);
-                    newArr[index] = data;
-                    return newArr;
-                })
+                updateProductInList(res.data);
                 alert("המוצר עודכן בהצלחה");
                 changePruductEdit(null);
             })

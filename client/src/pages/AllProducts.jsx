@@ -63,6 +63,12 @@ const AllProducts = () => {
         )
     }
 
+    function updateProductInList(updatedProduct) {
+        updateData(
+            productsArr.map(product => product._id === updatedProduct._id ? updatedProduct : product)
+        )
+    }
+
     return (
         <div className="allProduct">
             <Outlet />
@@ -96,7 +102,7 @@ const AllProducts = () => {
             {isShowCart && <MiniCart handleIsShowCart={handleIsShowCart}></MiniCart>}
             {productToEdit &&
                 <UpdateProduct
-                    product={productToEdit} changePruductEdit={handleProductEdit} setProductsArr={updateData}
+                    product={productToEdit} changePruductEdit={handleProductEdit} updateProductInList={updateProductInList}
                 />
             }
         </div>
