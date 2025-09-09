@@ -6,13 +6,23 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express from "express"
 
+const allowedOrigins = [
+  "https://new-born-byta.netlify.app",
+  "http://localhost:5173"
+];
+
+const corsOptions = {
+  origin: allowedOrigins,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
+};
+
 dotenv.config();
 
 const app = express();
 
 connectToDB();
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use("/api/images", express.static("public/products"));
