@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Container, Grid, Typography, Card, CardContent } from "@mui/material";
 import { Link } from "react-router-dom";
-import '../../public/css/homePage.scss';
+import '../../public/css/home.scss';
 
 const categories = ["כל המוצרים", "אקססוריז", "ביגוד וטקסטיל", "עגלות", "רהיטים", "מתנות", "צעצועים"];
 
