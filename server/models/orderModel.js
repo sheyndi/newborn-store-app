@@ -6,7 +6,7 @@ const minimalProductschema = Schema({
     name: { type: String, required: true },
     price: Number,
     text: String,
-    id_gift_in_Products: { type: Schema.Types.ObjectId, ref: PRODUCTS, required: true },
+    id_product_in_PRODUCTS: { type: Schema.Types.ObjectId, ref: PRODUCTS, required: true },
     formatText: { type: String, enum: ['format1', 'format2', 'format3'] },
     quantity: { type: Number, required: true }
 })

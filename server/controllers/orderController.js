@@ -70,7 +70,7 @@ export const addOrder = async (req, res) => {
             return res.status(400).json({ title: "cannot add order", message: "id_user is not exist" })
 
         for (const prod of body.products) {
-            if (!prod.id_gift_in_gifts || !prod.quantity || !prod.name || !prod.price)
+            if (!prod.id_product_in_PRODUCTS || !prod.quantity || !prod.name || !prod.price)
                 return res.status(400).json({ title: "missing parameters", message: "Not all required product parameters were received" })
             let gift = await PRODUCTS.findById(prod.id_gift_in_PRODUCT)
             if (!gift)

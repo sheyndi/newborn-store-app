@@ -46,7 +46,7 @@ const CheckOut = () => {
     data.products = cart.arrProducts.map(p => ({
       name: p.name,
       price: p.price,
-      id_gift_in_GIFTS: p._id,
+      id_product_in_PRODUCTS: p._id,
       quantity: p.quantity
     }));
 
