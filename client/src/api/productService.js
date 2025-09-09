@@ -1,6 +1,6 @@
 import axios from "axios"
 
-let baseUrl = "https://baby-store-node-backend.onrender.com/api/gift";
+let baseUrl = "https://baby-store-node-backend.onrender.com/api/product";
 
 export const pagesProductsApi = (limit, category) => {
     return axios.get(baseUrl + `/numPages/${category ? category : ""}?limit=${limit}`)

@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose"
 
-const giftSchema = Schema({
+const productSchema = Schema({
     name: { type: String, required: true },
     price: { type: Number, required: true },
     description: { type: String },
@@ -12,6 +12,6 @@ const giftSchema = Schema({
     size: {type: [String]}
 })
 
-const giftModel = model("gift box", giftSchema);
+const productModel = model("gift box", productSchema);
 
-export default giftModel;
+export default productModel;

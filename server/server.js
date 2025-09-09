@@ -1,6 +1,6 @@
 import connectToDB from "./config/DB.js"
 import userRouter from "./routes/userRoute.js"
-import giftRouter from "./routes/giftRoute.js"
+import productRouter from "./routes/productRoute.js"
 import orderRouter from "./routes/orderRoute.js"
 import cors from "cors";
 import dotenv from "dotenv";
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/images", express.static("public/products"));
 app.use("/api/user", userRouter);
-app.use("/api/gift", giftRouter);
+app.use("/api/product", productRouter);
 app.use("/api/order", orderRouter);
 
 let port = process.env.PORT || 3001;
