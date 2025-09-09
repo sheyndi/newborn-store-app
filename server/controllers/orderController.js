@@ -1,6 +1,6 @@
 import ORDERS from "../models/orderModel.js";
 import USERS from "../models/userModel.js";
-import GIFTS from "../models/giftModel.js";
+import PRODUCTS from "../models/productModel.js";
 import orderModel from "../models/orderModel.js";
 import { sendOrderConfirmationEmail } from "../Utils/mailService.js";
 
@@ -42,7 +42,7 @@ export const deleteOrder = async (req, res) => {
     try {
         let order = await ORDERS.findById(id)
         if (!order)
-            return res.status(400).json({ title: "not found this order", message: "id is not exist in GIFTS" })
+            return res.status(400).json({ title: "not found this order", message: "id is not exist in PRODUCT" })
         if (order.is_sending == true)
             return res.status(400).json({ title: "cannot delete order", message: "The order has already started" })
         if ((new Date() - order.date_order) / (1000 * 60 * 60 * 24) > 5)
@@ -70,15 +70,15 @@ export const addOrder = async (req, res) => {
             return res.status(400).json({ title: "cannot add order", message: "id_user is not exist" })
 
         for (const prod of body.products) {
-            if (!prod.id_gift_in_GIFTS || !prod.quantity || !prod.name || !prod.price)
+            if (!prod.id_gift_in_gifts || !prod.quantity || !prod.name || !prod.price)
                 return res.status(400).json({ title: "missing parameters", message: "Not all required product parameters were received" })
-            let gift = await GIFTS.findById(prod.id_gift_in_GIFTS)
+            let gift = await PRODUCTS.findById(prod.id_gift_in_PRODUCT)
             if (!gift)
                 return res.status(400).json({ title: "cannot add order", message: "product is not exist" })
             if (gift.quantity_in_stock - prod.quantity < 0)
                 return res.status(400).json({ title: "This product cannot be ordered", message: "The product is out of stock" })
             prod.price = gift.price;
-            await GIFTS.findByIdAndUpdate(prod.id_gift_in_GIFTS, { quantity_in_stock: gift.quantity_in_stock - prod.quantity }, { new: true })
+            await PRODUCTS.findByIdAndUpdate(prod.id_gift_in_PRODUCT, { quantity_in_stock: gift.quantity_in_stock - prod.quantity }, { new: true })
         };
 
         if (body.target_date && new Date(body.target_date) < Date.now())
@@ -104,7 +104,7 @@ export const getOrdersFromUserById = async (req, res) => {
     let data = await ORDERS.find({ id_user: id }).skip((page - 1) * limit).limit(limit);
     try {
         if (!data)
-            return res.status(400).json({ title: "cannot get order from this user", message: "this user is not exist in GIFTS" })
+            return res.status(400).json({ title: "cannot get order from this user", message: "this user is not exist in PRODUCT" })
         res.json(data);
     }
     catch (err) {
@@ -118,7 +118,7 @@ export const UpdateOrderIsSending = async (req, res) => {
     let data = await ORDERS.findByIdAndUpdate(id, { is_sending: true }, { new: true });
     try {
         if (!data)
-            return res.status(400).json({ title: "cannot get order from this user", message: "this user is not exist in GIFTS" })
+            return res.status(400).json({ title: "cannot get order from this user", message: "this user is not exist in PRODUCT" })
         res.json(data);
     }
     catch (err) {
