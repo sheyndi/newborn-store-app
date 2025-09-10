@@ -1,23 +1,53 @@
 import React from "react";
-import { Button, Container, Grid, Typography, Card, CardContent } from "@mui/material";
 import { Link } from "react-router-dom";
-import '../../public/css/home.scss';
+import {
+  Container,
+  Grid,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+} from "@mui/material";
+import { FaTruck, FaStar, FaTags, FaGift } from "react-icons/fa";
+import logo from "../assets/logo.png";
+import "../../public/css/home.scss";
 
-const categories = ["כל המוצרים", "אקססוריז", "ביגוד וטקסטיל", "עגלות", "רהיטים", "מתנות", "צעצועים"];
+// קטגוריות לדוגמה
+const categories = [
+  "כל המוצרים",
+  "אקססוריז",
+  "ביגוד וטקסטיל",
+  "עגלות",
+  "רהיטים",
+  "מתנות",
+  "צעצועים",
+];
 
 const HomePage = () => {
   return (
     <div className="home-page">
       {/* Hero Section */}
       <section className="hero">
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" className="hero-content">
+          <img
+            src={logo}
+            alt="New Born Logo"
+            className="logo"
+          />
           <Typography variant="h3" component="h1" gutterBottom>
-            ברוכים הבאים לחנות שלנו 👶
+            קניה חלומית למבינים ✨
           </Typography>
           <Typography variant="h6" gutterBottom>
-            כל מה שתצטרכו במקום אחד
+            כל מה שתצטרכו לתינוקות – באיכות מעולה ובמחיר נגיש
           </Typography>
-          <Button variant="contained" color="primary" size="large" component={Link} to="/category/כל-המוצרים">
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            component={Link}
+            to="/collection/כל המוצרים"
+            className="cta-btn"
+          >
             התחילו לקנות
           </Button>
         </Container>
@@ -26,17 +56,17 @@ const HomePage = () => {
       {/* Categories */}
       <section className="categories">
         <Container maxWidth="lg">
-          <Typography variant="h4" gutterBottom>
-            קטגוריות
+          <Typography variant="h4" gutterBottom align="center">
+            קטגוריות מובילות
           </Typography>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} justifyContent="center">
             {categories.map((category, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card className="category-card">
+              <Grid item xs={12} sm={6} md={3} key={index}>
+                <Card className="category-card" elevation={3}>
                   <CardContent>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h6" align="center">
                       <Link
-                        to={`/category/${category.replace(/\s+/g, "-")}`}
+                        to={`/collection/${category.replace(/\s+/g, "-")}`}
                         className="category-link"
                       >
                         {category}
@@ -50,12 +80,59 @@ const HomePage = () => {
         </Container>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
+      {/* Advantages */}
+      <section className="advantages">
         <Container maxWidth="lg">
-          <Typography variant="body2">© 2025 החנות שלנו - כל הזכויות שמורות</Typography>
+          <Typography variant="h4" gutterBottom align="center">
+            למה לקנות אצלנו?
+          </Typography>
+          <Grid container spacing={4} justifyContent="center">
+            <Grid item xs={12} sm={4} className="advantage">
+              <FaTruck size={50} color="#4fc3f7" />
+              <Typography variant="h6">משלוחים מהירים</Typography>
+              <Typography variant="body2">
+                קבלו את ההזמנה עד הבית בזמן קצר
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={4} className="advantage">
+              <FaStar size={50} color="#fdd835" />
+              <Typography variant="h6">איכות מעולה</Typography>
+              <Typography variant="body2">
+                מוצרים נבחרים בקפידה וברמת גימור גבוהה
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={4} className="advantage">
+              <FaTags size={50} color="#81c784" />
+              <Typography variant="h6">מחירים נוחים</Typography>
+              <Typography variant="body2">
+                מגוון רחב במחירים שמתאימים לכל כיס
+              </Typography>
+            </Grid>
+          </Grid>
         </Container>
-      </footer>
+      </section>
+
+      {/* Gift Section */}
+      <section className="gift-section">
+        <Container maxWidth="md" className="gift-content">
+          <FaGift size={60} color="#ff80ab" />
+          <Typography variant="h4" gutterBottom>
+            מחפשים מתנה מושלמת?
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            הפתיעו את ההורים הטריים עם מתנות מרגשות וייחודיות
+          </Typography>
+          <Button
+            variant="outlined"
+            color="secondary"
+            size="large"
+            component={Link}
+            to="/collection/מתנות"
+          >
+            מצאו מתנה עכשיו
+          </Button>
+        </Container>
+      </section>
     </div>
   );
 };

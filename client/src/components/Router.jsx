@@ -23,7 +23,7 @@ const Router = () => {
             <Route path="/checkout" element={<ProtectedRoutes role={"user"}><CheckOut /></ProtectedRoutes>}></Route>
             <Route path="/addProduct" element={<ProtectedRoutes role={"admin"}><AddProduct /></ProtectedRoutes>}></Route>
             <Route path="/details/:id" element={<ProductDetails />} />
-            <Route path="/forgot-password" element={<ForgotPassword/>} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset_password/:token" element={<ResetPassword />} />
         </Routes>
     );

@@ -100,7 +100,7 @@ const AuthForm = () => {
                         </FormControl>
                     )}
                 />
-                {!isSignUp && <a className='forgot-password-link' href="/forgot-password" >שכחתי סיסמה</a>}
+                {!isSignUp && <Link className='forgot-password-link' to="/forgot-password" >שכחתי סיסמה</Link>}
 
                 {/* טלפון - רק בהרשמה */}
                 {isSignUp && (
