@@ -187,7 +187,7 @@ export const sendResetPassword = async (req, res) => {
             return res.status(404).json({ title: "User not found", message: "No user found with this email" });
         }
         const token = generateToken(user);
-        const resetLink = `http://localhost:5173/reset_password/${token}`;
+        const resetLink = `https://new-born-byta.netlify.app/reset_password/${token}`;
         await sendResetPasswordEmail(email, resetLink);
         res.json({ message: "Reset password email sent successfully" });
     } catch (error) {
