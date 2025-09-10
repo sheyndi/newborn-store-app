@@ -66,7 +66,7 @@ const HomePage = () => {
                   <CardContent>
                     <Typography variant="h6" align="center">
                       <Link
-                        to={`/collection/${category.replace(/\s+/g, "-")}`}
+                        to={`/collection/${category}`}
                         className="category-link"
                       >
                         {category}
