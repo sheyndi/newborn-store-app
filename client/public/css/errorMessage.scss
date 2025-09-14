@@ -1,0 +1,15 @@
+.error-message {
+  margin: 20px auto;
+  max-width: 600px;
+  text-align: right;
+
+  .MuiAlert-root {
+    border-radius: 12px;
+    font-size: 1rem;
+    direction: rtl;
+  }
+
+  .MuiAlertTitle-root {
+    font-weight: bold;
+  }
+}

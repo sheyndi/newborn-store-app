@@ -45,7 +45,7 @@ const HomePage = () => {
             color="primary"
             size="large"
             component={Link}
-            to="/collection/כל המוצרים"
+            to={"/collection/כל המוצרים/" + 1}
             className="cta-btn"
           >
             התחילו לקנות
@@ -66,7 +66,7 @@ const HomePage = () => {
                   <CardContent>
                     <Typography variant="h6" align="center">
                       <Link
-                        to={`/collection/${category}`}
+                        to={`/collection/${category}/1`}
                         className="category-link"
                       >
                         {category}
@@ -127,7 +127,7 @@ const HomePage = () => {
             color="secondary"
             size="large"
             component={Link}
-            to="/collection/מתנות"
+            to={"/collection/מתנות/" + 1}
           >
             מצאו מתנה עכשיו
           </Button>

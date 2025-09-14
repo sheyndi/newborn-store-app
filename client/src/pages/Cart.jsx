@@ -12,7 +12,7 @@ const Cart = () => {
     const cart = useSelector(state => state.cart);
 
     const handleFinishOrder = () => {
-        navigate(user ? "/checkout" : "/login");
+        navigate(user ? "/checkout" : "/login", { state: { from: "/checkout" } });
     };
 
     return (

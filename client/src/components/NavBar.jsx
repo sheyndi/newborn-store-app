@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
@@ -32,9 +32,9 @@ const NavBar = () => {
                 <ul className="nav-bar-list">
                     <div className="logo-section">
                         <Link to={"/"}><li className='logo'><img src={logo} alt="" /></li></Link>
-                        <li className="nav-bar-item nav-bar-products"><Link className="nav-bar-link" to="/collection/כל המוצרים">מוצרים</Link></li>
+                        <li className="nav-bar-item nav-bar-products"><Link className="nav-bar-link" to={"/collection/כל המוצרים/" + 1}>מוצרים</Link></li>
                         {user?.role === 'admin' && <li className="nav-bar-item nav-bar-add-product">
-                            <Link className="nav-bar-link" to="/addProduct">הוספת מוצר</Link>
+                            <Link className="nav-bar-link" to="/addProduct" state={{ from: location.pathname }}>הוספת מוצר</Link>
                         </li>}
                     </div>
 
@@ -59,8 +59,8 @@ const NavBar = () => {
                                                 <MenuItem onClick={popupState.close}>My account</MenuItem>
                                                 <MenuItem onClick={() => { popupState.close(); handleLogout(); }}>Logout</MenuItem>
                                             </Menu>) : (<Menu {...bindMenu(popupState)}>
-                                                <MenuItem onClick={() => { popupState.close(); navigate('/login'); }}>התחברות</MenuItem>
-                                                <MenuItem onClick={() => { popupState.close(); navigate('/signup'); }}>הרשמה</MenuItem>
+                                                <MenuItem onClick={() => { popupState.close(); navigate('/login', { state: { from: location.pathname } }); }}>התחברות</MenuItem>
+                                                <MenuItem onClick={() => { popupState.close(); navigate('/signup', { state: { from: location.pathname } }); }}>הרשמה</MenuItem>
                                             </Menu>)}
                                     </React.Fragment>
                                 )}
@@ -98,9 +98,13 @@ const NavBar = () => {
                 <div className="categoryLinks">
                     {categories.map(cat => (
                         <NavLink
-                            className={({ isActive }) => isActive ? "activeLinkCat" : "linkCat"}
                             key={cat}
-                            to={encodeURI(`/collection/${cat}`)}
+                            to={`/collection/${cat}/1`}
+                            className={() =>
+                                decodeURIComponent(location.pathname).startsWith(`/collection/${cat}`)
+                                    ? "activeLinkCat"
+                                    : "linkCat"
+                            }
                         >
                             {cat}
                         </NavLink>

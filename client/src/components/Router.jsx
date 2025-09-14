@@ -13,7 +13,7 @@ import HomePage from "../pages/HomePage";
 const Router = () => {
     return (
         <Routes>
-            <Route path="collection/:category" element={<AllProducts />} >
+            <Route path="collection/:category/:currentPage" element={<AllProducts />} >
                 <Route path="details/:id" element={<ProductDetails />} />
             </Route>
             <Route path="signup" element={<AuthForm />}></Route>

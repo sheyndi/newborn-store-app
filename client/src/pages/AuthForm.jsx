@@ -38,7 +38,7 @@ const AuthForm = () => {
         executeRequest(() => apiCall(data), (res) => {
             disp(userIn(res));
             alert("שלום ל: " + res.userName);
-            navigate(-1);
+            navigate(location.state?.from || "/");
         });
     }
 
