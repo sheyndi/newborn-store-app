@@ -1,13 +1,13 @@
 import { sendResetPasswordEmail } from "../Utils/mailService.js";
 import { generateToken } from "../Utils/generateToken.js";
-import Users from "../models/userModel.js";
+import USERS from "../models/userModel.js";
 import bcrypt from "bcrypt";
 
 //קבלת כל המשתמשים
 export const getAllUsers = async (req, res) => {
     let limit = req.query.limit || 20;
     let page = req.query.page || 1;
-    let data = await Users.find().skip((page - 1) * limit).limit(limit).select('-password');
+    let data = await USERS.find().skip((page - 1) * limit).limit(limit).select('-password');
     try {
         if (!data)
             return res.status(404).json({ title: "cannot get all", message: "there are no users" });
@@ -21,7 +21,7 @@ export const getAllUsers = async (req, res) => {
 //id קבלת משתמש לפי 
 export const getUserByID = async (req, res) => {
     let { id } = req.params;
-    let data = await Users.findById(id).select('-password');
+    let data = await USERS.findById(id).select('-password');
     try {
         if (!data)
             return res.status(404).json({ title: "cannot get byId", message: "id is not exists" });
@@ -50,12 +50,12 @@ export const addUserSignUp = async (req, res) => {
         return res.status(404).json({ title: "Password not strong", message: "Password should consist of upper and lower case symbols and at least 8 characters" });
     try {
         //בדיקה אם המשתמש קיים 
-        let is_user = await Users.findOne({ email: body.email })
+        let is_user = await USERS.findOne({ email: body.email })
         if (is_user)
             return res.status(400).json({ title: "cannot add user", message: "email is exist" })
         body.password = await bcrypt.hash(body.password, 10);
         //הוספת המשתמש החדש
-        let newUser = new Users(req.body);
+        let newUser = new USERS(req.body);
         let data = await newUser.save();
         data = data.toObject();
         data.password = undefined;
@@ -78,7 +78,7 @@ export const updateUser = async (req, res) => {
     const emailRegex = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
     if (body.email && !emailRegex.test(body.email))
         return res.status(404).json({ title: "Email not strong", message: "Email not good" });
-    let data = await Users.findByIdAndUpdate(id, body, { new: true });
+    let data = await USERS.findByIdAndUpdate(id, body, { new: true });
     try {
         if (!data)
             return res.status(404).json({ title: "error cannot get byId to update", message: "id not defind" });
@@ -103,7 +103,7 @@ export const updatePassword = async (req, res) => {
         return res.status(404).json({ title: "Password not strong", message: "Password should consist of upper and lower case symbols and at least 8 characters" });
     try {
         body.password = await bcrypt.hash(body.password, 10);
-        let data = await Users.findByIdAndUpdate(userId, body, { new: true });
+        let data = await USERS.findByIdAndUpdate(userId, body, { new: true });
         if (!data)
             return res.status(404).json({ title: "error cannot get byId to update", message: "id not defind" });
         data.password = undefined;
@@ -117,7 +117,7 @@ export const updatePassword = async (req, res) => {
 //קבלת משתמש לפי שם משתמש וסיסמה
 export const getUserByLogin = async (req, res) => {
     const { email, password } = req.body;
-    let user = await Users.findOne({ email: email });
+    let user = await USERS.findOne({ email: email });
     if (!user)
         return res.status(400).json({ title: "cannot get by login", message: "no user with such details" });
 
@@ -132,7 +132,7 @@ export const getUserByLogin = async (req, res) => {
         if (isMatch) {
             // Hash and update the password in DB
             const hashedPassword = await bcrypt.hash(password, 10);
-            await Users.findByIdAndUpdate(user._id, { password: hashedPassword });
+            await USERS.findByIdAndUpdate(user._id, { password: hashedPassword });
             user.password = hashedPassword;
         }
     }
@@ -144,7 +144,7 @@ export const getUserByLogin = async (req, res) => {
     if (!email || !password)
         return res.status(400).json({ title: "error in get by login", message: "missing details" });
     try {
-        let data = await Users.findOne({ email: email }).lean();
+        let data = await USERS.findOne({ email: email }).lean();
         if (!data)
             return res.status(400).json({ title: "cannot get by login", message: "no user with such details" });
         const isMatch = await bcrypt.compare(password, data.password);
@@ -163,7 +163,7 @@ export const getUserByLogin = async (req, res) => {
 export async function getTotalUserPages(req, res) {
     let limit = req.query.limit || 20;
     try {
-        let data = await Users.countDocuments();
+        let data = await USERS.countDocuments();
         res.json({
             totalCount: data,
             totalPages: Math.ceil(data / limit),
@@ -182,7 +182,7 @@ export const sendResetPassword = async (req, res) => {
         return res.status(400).json({ title: "Missing email", message: "Email is required" });
     }
     try {
-        const user = await Users.findOne({ email });
+        const user = await USERS.findOne({ email });
         if (!user) {
             return res.status(404).json({ title: "User not found", message: "No user found with this email" });
         }
