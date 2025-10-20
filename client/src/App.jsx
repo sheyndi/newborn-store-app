@@ -24,7 +24,7 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <Container maxWidth="lg">
-          <Typography variant="body2">© 2025 החנות שלנו - כל הזכויות שמורות</Typography>
+          <Typography variant="body2">© 2024 החנות שלנו - כל הזכויות שמורות</Typography>
         </Container>
       </footer>
       
