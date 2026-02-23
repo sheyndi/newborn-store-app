@@ -17,7 +17,6 @@ const cartSlice = createSlice({
     initialState: initCart,
     reducers: {
         addProduct: (state, action) => {
-            state.quantityProduct++;
             const p = state.arrProducts.find(p => p._id === action.payload._id);
             if (p) {
                 if (p.quantity >= p.quantity_in_stock) {
@@ -29,6 +28,7 @@ const cartSlice = createSlice({
                 state.arrProducts.push({ ...action.payload, quantity: 1 });
                 localStorage.setItem('arrProduct', JSON.stringify(state.arrProducts));
             }
+            state.quantityProduct++;
             state.finalPrice += action.payload.price;
             updateLocalStorage(state);
         },
